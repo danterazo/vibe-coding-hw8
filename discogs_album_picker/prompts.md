@@ -159,3 +159,19 @@ Why can't I filter on cassettes? My library has plenty of cassettes, e.g. George
 The checkbox filter included any checked type, and all physical types start checked, so selecting Cassette alone did not narrow the pool. Added
 one-click Physical Only, Cassette Only, and All Media presets while retaining individual checkboxes. Verified Cassette Only submits only `cassette`
 and returns a cassette-format result; the shortcut controls fit on mobile.
+
+## Prompt 10 (use only the existing media checkboxes)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Why do you need these additional filters? Just fix the filters that are already there. That way if I want every type of media, I just leave the
+defaults. If I only want cassettes, I uncheck everything except cassettes
+
+### Output 10
+
+Removed the extra preset buttons and kept only the existing media checkboxes. Physical formats remain checked by default and Digital remains
+unchecked; the helper text explains that checked formats are included. Browser verification confirmed the Cassette-only checkbox selection submits
+only `cassette` and renders a cassette-format result.

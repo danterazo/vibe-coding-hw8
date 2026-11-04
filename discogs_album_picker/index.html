@@ -199,30 +199,6 @@
         text-transform: uppercase;
       }
 
-      .filter-presets {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 10px;
-      }
-
-      .filter-preset {
-        min-height: 30px;
-        padding: 0 9px;
-        border: 1px solid var(--line);
-        border-radius: 3px;
-        background: transparent;
-        color: var(--teal);
-        cursor: pointer;
-        font-size: 10px;
-        font-weight: 900;
-      }
-
-      .filter-preset:hover {
-        border-color: var(--teal);
-        background: var(--teal-light);
-      }
-
       .media-options {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -640,17 +616,6 @@
             </div>
             <fieldset class="media-filters">
               <legend>Media Types</legend>
-              <div class="filter-presets" aria-label="Media filter presets">
-                <button class="filter-preset" id="physical-only" type="button">
-                  Physical Only
-                </button>
-                <button class="filter-preset" id="cassette-only" type="button">
-                  Cassette Only
-                </button>
-                <button class="filter-preset" id="all-media" type="button">
-                  All Media
-                </button>
-              </div>
               <div class="media-options">
                 <label class="media-option"
                   ><input
@@ -725,7 +690,7 @@
                 >
               </div>
               <p class="filter-note">
-                Any checked type can match. Digital is off by default.
+                Choose which formats to include. Digital is off by default.
               </p>
             </fieldset>
             <button class="button pick-button" id="pick-button" type="submit">
@@ -807,30 +772,6 @@
         "other-physical": "▤",
         digital: "↓",
       };
-
-      function setMediaTypes(selectedTypes) {
-        for (const input of mediaInputs) {
-          input.checked = selectedTypes.has(input.value);
-        }
-      }
-
-      document.querySelector("#physical-only").addEventListener("click", () => {
-        setMediaTypes(
-          new Set(
-            mediaInputs
-              .filter((input) => input.value !== "digital")
-              .map((input) => input.value),
-          ),
-        );
-      });
-      document
-        .querySelector("#cassette-only")
-        .addEventListener("click", () => setMediaTypes(new Set(["cassette"])));
-      document
-        .querySelector("#all-media")
-        .addEventListener("click", () =>
-          setMediaTypes(new Set(mediaInputs.map((input) => input.value))),
-        );
 
       async function loadConfiguration() {
         pickButton.disabled = true;
