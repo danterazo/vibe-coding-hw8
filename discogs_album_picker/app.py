@@ -3,8 +3,10 @@
 
 import argparse
 import json
+import os
 import random
 import re
+import shlex
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -31,6 +33,37 @@ SUPPORTED_MEDIA_TYPES = {
 }
 DIGITAL_FORMAT_NAMES = {'digital media', 'file', 'download', 'streaming'}
 collection_cache: dict[str, tuple[float, int, list[dict[str, Any]]]] = {}
+
+
+def load_local_environment(path: Path) -> dict[str, str]:
+    values = {}
+    try:
+        with path.open(encoding='utf-8') as env_file:
+            for line in env_file:
+                entry = line.strip()
+                if not entry or entry.startswith('#'):
+                    continue
+                if entry.startswith('export '):
+                    entry = entry[7:].lstrip()
+                key, separator, raw_value = entry.partition('=')
+                if not separator:
+                    key, separator, raw_value = entry.partition(':')
+                key = key.strip()
+                if not separator or key not in {'DISCOGS_PAT', 'DISCOGS_USERNAME'}:
+                    continue
+                try:
+                    parts = shlex.split(raw_value, comments=True, posix=True)
+                except ValueError:
+                    continue
+                values[key] = ' '.join(parts)
+    except OSError:
+        return {}
+    return values
+
+
+LOCAL_ENV = load_local_environment(APP_DIR / '.env')
+DISCOGS_USERNAME = (os.environ.get('DISCOGS_USERNAME') or LOCAL_ENV.get('DISCOGS_USERNAME', '')).strip()
+DISCOGS_PAT = (os.environ.get('DISCOGS_PAT') or LOCAL_ENV.get('DISCOGS_PAT', '')).strip()
 
 
 class PickerError(Exception):
@@ -180,7 +213,17 @@ class PickerHandler(BaseHTTPRequestHandler):
     server_version = 'DiscogsAlbumPicker/1.0'
 
     def do_GET(self) -> None:
-        if urlsplit(self.path).path not in ('/', '/index.html'):
+        path = urlsplit(self.path).path
+        if path == '/api/config':
+            self.send_json(
+                200,
+                {
+                    'username': DISCOGS_USERNAME,
+                    'token_configured': bool(DISCOGS_PAT),
+                },
+            )
+            return
+        if path not in ('/', '/index.html'):
             self.send_error(404)
             return
         try:
@@ -215,9 +258,11 @@ class PickerHandler(BaseHTTPRequestHandler):
             requested_media_types = payload.get('media_types')
             if not isinstance(requested_media_types, list) or not all(isinstance(media_type, str) for media_type in requested_media_types):
                 raise PickerError('Choose at least one supported media type.')
+            username = str(payload.get('username') or DISCOGS_USERNAME).strip()
+            token = DISCOGS_PAT or str(payload.get('token', ''))
             album = random_collection_release(
-                str(payload.get('username', '')).strip(),
-                str(payload.get('token', '')),
+                username,
+                token,
                 set(requested_media_types),
             )
             self.send_json(200, {'album': album})

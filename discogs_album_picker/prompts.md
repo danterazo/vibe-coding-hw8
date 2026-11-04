@@ -96,3 +96,20 @@ Added icon-and-label media filters for LP, Vinyl, CD, Cassette, DVD, Blu-ray, Ot
 Digital starts unchecked. The backend now keeps digital releases available and filters picks using the selected media types. Mocked browser checks
 verified the submitted filters and rendered format chips; credential-free backend checks covered Digital, CD, Cassette, and LP selection. The Discogs
 form and media labels use Title Case.
+
+## Prompt 6 (load Discogs credentials from .env)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+I migrated the token to ".env". Give users the option to enter it on the website or, if .env is detected with DISCOGS_PAT, read that in and blank out
+the field on the website since you already have a token. I also have DISCOGS_USERNAME.
+
+### Output 6
+
+The server reads `DISCOGS_PAT` and `DISCOGS_USERNAME` from the process environment or the local `.env`, including the existing colon-separated format.
+`/api/config` returns only the username and whether a PAT is configured, never the PAT. A configured PAT leaves the browser field blank and disabled;
+otherwise manual token entry remains available. The username is prefilled when configured. Browser checks confirmed the configured state without
+displaying credential values.

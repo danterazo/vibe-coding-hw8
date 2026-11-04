@@ -603,7 +603,7 @@
                   maxlength="50"
                 />
               </div>
-              <div class="field">
+              <div class="field" id="token-field">
                 <label for="token">Personal Access Token</label>
                 <input
                   id="token"
@@ -694,7 +694,7 @@
             <button class="button pick-button" id="pick-button" type="submit">
               Pick an Album
             </button>
-            <p class="privacy-note">
+            <p class="privacy-note" id="privacy-note">
               School project. Use only a collection you are authorized to
               access. The token stays in this tab for repeat picks; it is not
               saved.
@@ -748,6 +748,8 @@
       const form = document.querySelector("#picker-form");
       const usernameInput = document.querySelector("#username");
       const tokenInput = document.querySelector("#token");
+      const tokenField = document.querySelector("#token-field");
+      const privacyNote = document.querySelector("#privacy-note");
       const pickButton = document.querySelector("#pick-button");
       const errorMessage = document.querySelector("#error-message");
       const statusMessage = document.querySelector("#selection-status");
@@ -765,6 +767,44 @@
         "other-physical": "▤",
         digital: "↓",
       };
+
+      async function loadConfiguration() {
+        pickButton.disabled = true;
+        try {
+          const response = await fetch("/api/config", { cache: "no-store" });
+          if (!response.ok) throw new Error("Configuration unavailable.");
+          const configuration = await response.json();
+          if (configuration.username) {
+            usernameInput.value = configuration.username;
+          }
+          if (configuration.token_configured) {
+            tokenInput.value = "";
+            tokenInput.required = false;
+            tokenInput.disabled = true;
+            tokenInput.placeholder = "Configured on server";
+            tokenField.classList.add("is-server-configured");
+            privacyNote.textContent =
+              "A server-side token is configured. Its value is never sent to the page.";
+          } else {
+            tokenInput.required = true;
+            tokenInput.disabled = false;
+            tokenInput.placeholder = "";
+            tokenField.classList.remove("is-server-configured");
+            privacyNote.textContent =
+              "Enter a personal access token. It is used for this request and not saved.";
+          }
+        } catch {
+          tokenInput.required = true;
+          tokenInput.disabled = false;
+          tokenInput.placeholder = "";
+          privacyNote.textContent =
+            "Server configuration unavailable. Enter a personal access token.";
+        } finally {
+          pickButton.disabled = false;
+        }
+      }
+
+      loadConfiguration();
 
       function renderAlbum(album) {
         document.querySelector("#album-kicker").textContent =
