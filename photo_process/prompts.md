@@ -47,3 +47,21 @@ those same metadata changes, i.e. "Dante Razo" as the author.
 Updated JPEG exports to match the shared `process-photos.sh` metadata: EXIF Artist and Copyright, XMP Creator, AttributionName, CaptionWriter, Credit,
 Title, PreservedFileName, and `Processed=True`. ExifTool verified every field on a browser-generated JPEG, including the exact `© Dante Razo`
 copyright. The 1500 × 1000 dimensions and 150 DPI density remain intact; the shared script was not changed.
+
+## Prompt 3 (editable attribution and school-use notes)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Make the photo processor modular, s.t. anyone could put their name and then get attribution in the image. Just make the default name / text box value
+"Dante Razo". Add a note to use responsibly as this app (and the others, if they need notes too) is just for school
+
+Aim to have code in one file per project, like the instructions request
+
+### Output 3
+
+Added an editable author/credit field defaulting to `Dante Razo`. Its value populates EXIF Artist and Copyright plus XMP Creator, AttributionName,
+CaptionWriter, and Credit; the title, preserved filename, and processed flag remain. XML values are escaped. ExifTool verified a custom `Alex & Co`
+name in every author field. Added a visible reminder to process only images the user has permission to edit and that attribution is user-provided.
