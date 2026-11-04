@@ -1,6 +1,6 @@
 # Project: discogs-album-picker
 
-> - **Files:** app.py, index.html, test_app.py
+> - **Files:** app.py, index.html
 > - **Dates:** 2026-11-04
 > - **Defaults:** GitHub Copilot · model TBD
 > - **Status:** prototype
@@ -66,3 +66,16 @@ Aim to have code in one file per project, like the instructions request
 
 Added a school-project note reminding users to access only collections they are authorized to use. The Discogs token remains in the current tab and is
 not saved.
+
+## Prompt 4 (keep Python and HTML separate)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Actually, it seems messier with just one file, so have a python file and HTML one but no test file for the Discogs app.
+
+### Output 4
+
+Kept the Python server and HTML interface as separate runtime files and removed the test module. The existing seven-test suite passed before removal.
