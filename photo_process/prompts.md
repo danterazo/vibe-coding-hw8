@@ -31,3 +31,19 @@ possible, so when I return from work for lunch, it's all complete or at least in
 
 I built [photo_process.html](photo_process.html) as a local batch image converter. It fits JPEG, PNG, and WebP files without cropping on a white 1500
 × 1000 canvas and exports JPEGs tagged at 150 DPI. A browser-generated image verified the output dimensions and 150 × 150 DPI metadata.
+
+## Prompt 2 (match shared ExifTool metadata)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Okay, try again for the piecemeal commits. Then for the photo processing tool, look at my exiftool processing script in my common repo(s) and apply
+those same metadata changes, i.e. "Dante Razo" as the author.
+
+### Output 2
+
+Updated JPEG exports to match the shared `process-photos.sh` metadata: EXIF Artist and Copyright, XMP Creator, AttributionName, CaptionWriter, Credit,
+Title, PreservedFileName, and `Processed=True`. ExifTool verified every field on a browser-generated JPEG, including the exact `© Dante Razo`
+copyright. The 1500 × 1000 dimensions and 150 DPI density remain intact; the shared script was not changed.

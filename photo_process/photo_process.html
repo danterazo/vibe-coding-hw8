@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#eef2f5" />
+    <title>Photo Process</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1d2b36;
+        --muted: #647481;
+        --line: #cdd8df;
+        --paper: #eef2f5;
+        --white: #fbfcfd;
+        --blue: #176589;
+        --blue-soft: #d8eaf1;
+        --orange: #b4512d;
+        --green: #2f7251;
+        --red: #a63c3c;
+        --radius: 5px;
+        font-family: "Trebuchet MS", Verdana, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background:
+          linear-gradient(135deg, rgb(255 255 255 / 55%), transparent 58%),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0 31px,
+            rgb(29 43 54 / 3%) 32px 33px
+          ),
+          var(--paper);
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 60px;
+        padding: 0 max(22px, calc((100vw - 1060px) / 2));
+        border-bottom: 1px solid var(--line);
+        background: rgb(251 252 253 / 84%);
+      }
+
+      .mark {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .mark-icon {
+        width: 18px;
+        height: 18px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 4px var(--paper);
+        background: var(--orange);
+      }
+
+      main {
+        width: min(1060px, calc(100% - 44px));
+        margin: 0 auto;
+        padding: 44px 0 72px;
+      }
+
+      .intro {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        margin: 0 0 9px;
+        color: var(--orange);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 52px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .specs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .spec {
+        min-width: 116px;
+        padding: 11px 14px;
+        border-left: 2px solid var(--blue);
+        background: var(--white);
+      }
+
+      .spec:nth-child(2) {
+        border-color: var(--orange);
+      }
+
+      .spec strong,
+      .spec span {
+        display: block;
+      }
+
+      .spec strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19px;
+        font-weight: 500;
+      }
+
+      .spec span {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .dropzone {
+        display: grid;
+        min-height: 230px;
+        place-items: center;
+        padding: 28px;
+        border: 1px dashed #91a8b5;
+        border-radius: var(--radius);
+        background: rgb(251 252 253 / 77%);
+        text-align: center;
+        transition:
+          border-color 150ms ease,
+          background 150ms ease;
+      }
+
+      .dropzone.is-over {
+        border-color: var(--blue);
+        background: var(--blue-soft);
+      }
+
+      .drop-inner {
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+      }
+
+      .drop-icon {
+        display: grid;
+        width: 46px;
+        aspect-ratio: 1;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--white);
+        color: var(--blue);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 25px;
+      }
+
+      .drop-title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+      }
+
+      .drop-copy {
+        margin: -5px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--white);
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 800;
+        transition:
+          transform 130ms ease,
+          background 130ms ease;
+      }
+
+      .button:hover:not(:disabled) {
+        transform: translateY(-1px);
+      }
+
+      .button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #78a7bd;
+        outline-offset: 2px;
+      }
+
+      .button-primary {
+        border-color: var(--blue);
+        background: var(--blue);
+        color: white;
+      }
+
+      .button-primary:hover:not(:disabled) {
+        background: #10516f;
+      }
+
+      .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+
+      .file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
+      }
+
+      .queue-section {
+        margin-top: 30px;
+      }
+
+      .queue-heading {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin-bottom: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+        font-weight: 500;
+      }
+
+      .queue-count {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .queue {
+        display: grid;
+      }
+
+      .queue-empty {
+        padding: 24px 4px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .photo-row {
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+        min-height: 96px;
+        padding: 10px 4px;
+        border-bottom: 1px solid var(--line);
+        animation: rise 220ms ease both;
+      }
+
+      .preview {
+        width: 78px;
+        height: 60px;
+        object-fit: cover;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        background:
+          linear-gradient(45deg, #dce5e9 25%, transparent 25% 75%, #dce5e9 75%),
+          linear-gradient(45deg, #dce5e9 25%, transparent 25% 75%, #dce5e9 75%),
+          white;
+        background-position:
+          0 0,
+          6px 6px;
+        background-size: 12px 12px;
+      }
+
+      .file-name {
+        overflow: hidden;
+        margin: 0 0 5px;
+        font-size: 13px;
+        font-weight: 800;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .file-detail,
+      .file-state {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .file-state {
+        margin-top: 4px;
+      }
+
+      .file-state.is-ready {
+        color: var(--green);
+      }
+
+      .file-state.is-error {
+        color: var(--red);
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+      }
+
+      .download-link {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        padding: 0 10px;
+        border: 1px solid var(--blue);
+        border-radius: 3px;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .queue-empty[hidden],
+      .photo-row[hidden] {
+        display: none;
+      }
+
+      .notice {
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .live-status {
+        min-height: 18px;
+        margin: 12px 0 0;
+        color: var(--blue);
+        font-size: 12px;
+      }
+
+      .batch-actions {
+        margin-top: 20px;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar {
+          min-height: 54px;
+          padding: 0 16px;
+        }
+
+        main {
+          width: calc(100% - 32px);
+          padding-top: 30px;
+        }
+
+        h1 {
+          font-size: 38px;
+        }
+
+        .intro {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .specs {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .spec {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .dropzone {
+          min-height: 210px;
+          padding: 20px 14px;
+        }
+
+        .photo-row {
+          grid-template-columns: 62px minmax(0, 1fr);
+          gap: 8px 11px;
+          padding: 12px 0;
+        }
+
+        .preview {
+          grid-row: 1 / span 2;
+          width: 62px;
+          height: 56px;
+        }
+
+        .row-actions {
+          grid-column: 2;
+          justify-content: flex-start;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="mark">
+        <span class="mark-icon" aria-hidden="true"></span> Image utility / 01
+      </div>
+      <span class="queue-count">R50 sharing preset</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Batch conversion</p>
+          <h1 id="page-title">Photo process</h1>
+        </div>
+        <div class="specs" aria-label="Output settings">
+          <div class="spec">
+            <strong>1500 × 1000</strong><span>pixels</span>
+          </div>
+          <div class="spec"><strong>150 DPI</strong><span>JPEG</span></div>
+        </div>
+      </section>
+
+      <section
+        class="dropzone"
+        id="dropzone"
+        aria-label="Add photos to process"
+        aria-describedby="drop-copy"
+      >
+        <div class="drop-inner">
+          <span class="drop-icon" aria-hidden="true">+</span>
+          <p class="drop-title">Drop photos here</p>
+          <p class="drop-copy" id="drop-copy">
+            JPEG, PNG, or WebP. Images stay on this device.
+          </p>
+          <label class="button button-primary" for="file-input"
+            >Choose photos</label
+          >
+          <input
+            class="file-input"
+            id="file-input"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+          />
+        </div>
+      </section>
+
+      <p
+        class="live-status"
+        id="live-status"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <section class="queue-section" aria-labelledby="queue-title">
+        <div class="queue-heading">
+          <h2 id="queue-title">Processing queue</h2>
+          <span class="queue-count" id="queue-count">0 photos</span>
+        </div>
+        <div class="queue" id="queue" aria-live="polite">
+          <p class="queue-empty" id="queue-empty">
+            Your selected photos will appear here.
+          </p>
+        </div>
+      </section>
+
+      <p class="notice">
+        Output is fitted without cropping on a white 3:2 canvas. The JPEG is
+        tagged at 150 DPI with Dante Razo author and credit metadata.
+      </p>
+      <div class="row-actions batch-actions">
+        <button
+          class="button button-primary"
+          id="process-button"
+          type="button"
+          disabled
+        >
+          Process photos
+        </button>
+        <button class="button" id="clear-button" type="button" disabled>
+          Clear queue
+        </button>
+      </div>
+    </main>
+
+    <script>
+      const outputWidth = 1500;
+      const outputHeight = 1000;
+      const outputDpi = 150;
+      const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+      const fileInput = document.querySelector("#file-input");
+      const dropzone = document.querySelector("#dropzone");
+      const queueElement = document.querySelector("#queue");
+      const emptyElement = document.querySelector("#queue-empty");
+      const processButton = document.querySelector("#process-button");
+      const clearButton = document.querySelector("#clear-button");
+      const countElement = document.querySelector("#queue-count");
+      const liveStatus = document.querySelector("#live-status");
+      const jobs = [];
+      let isProcessing = false;
+
+      function formatBytes(bytes) {
+        if (bytes < 1024 * 1024)
+          return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+      }
+
+      function revokeJob(job) {
+        if (job.previewUrl) URL.revokeObjectURL(job.previewUrl);
+        if (job.outputUrl) URL.revokeObjectURL(job.outputUrl);
+      }
+
+      function render() {
+        countElement.textContent = `${jobs.length} ${jobs.length === 1 ? "photo" : "photos"}`;
+        emptyElement.hidden = jobs.length > 0;
+        processButton.disabled = jobs.length === 0 || isProcessing;
+        clearButton.disabled = jobs.length === 0 || isProcessing;
+        queueElement
+          .querySelectorAll(".photo-row")
+          .forEach((row) => row.remove());
+
+        for (const [index, job] of jobs.entries()) {
+          const row = document.createElement("article");
+          row.className = "photo-row";
+          row.dataset.id = job.id;
+
+          const image = document.createElement("img");
+          image.className = "preview";
+          image.src = job.previewUrl;
+          image.alt = "";
+
+          const details = document.createElement("div");
+          const name = document.createElement("p");
+          name.className = "file-name";
+          name.textContent = job.file.name;
+          const fileDetail = document.createElement("p");
+          fileDetail.className = "file-detail";
+          fileDetail.textContent = `${formatBytes(job.file.size)} · ${job.file.type || "image"}`;
+          const state = document.createElement("p");
+          state.className = `file-state${job.state === "ready" ? " is-ready" : job.state === "error" ? " is-error" : ""}`;
+          state.textContent = job.message;
+          details.append(name, fileDetail, state);
+
+          const actions = document.createElement("div");
+          actions.className = "row-actions";
+          if (job.outputUrl) {
+            const link = document.createElement("a");
+            link.className = "download-link";
+            link.href = job.outputUrl;
+            link.download = job.outputName;
+            link.textContent = "Download JPEG";
+            actions.append(link);
+          }
+          const remove = document.createElement("button");
+          remove.className = "button";
+          remove.type = "button";
+          remove.dataset.remove = job.id;
+          remove.textContent = "Remove";
+          remove.disabled = isProcessing;
+          actions.append(remove);
+
+          row.append(image, details, actions);
+          queueElement.append(row);
+        }
+      }
+
+      function addFiles(fileList) {
+        const files = Array.from(fileList).filter((file) =>
+          allowedTypes.has(file.type),
+        );
+        const rejected = fileList.length - files.length;
+        for (const file of files) {
+          jobs.push({
+            id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+            file,
+            previewUrl: URL.createObjectURL(file),
+            outputUrl: null,
+            outputName: "",
+            state: "queued",
+            message: "Ready to process",
+          });
+        }
+        if (rejected)
+          liveStatus.textContent = `${rejected} unsupported ${rejected === 1 ? "file was" : "files were"} skipped.`;
+        else
+          liveStatus.textContent = files.length
+            ? `${files.length} ${files.length === 1 ? "photo" : "photos"} added.`
+            : "";
+        render();
+      }
+
+      function makeJfifSegment() {
+        return new Uint8Array([
+          0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01,
+          0x01, 0x00, 0x96, 0x00, 0x96, 0x00, 0x00,
+        ]);
+      }
+
+      function setJpegDpi(buffer) {
+        const bytes = new Uint8Array(buffer);
+        if (bytes[0] !== 0xff || bytes[1] !== 0xd8)
+          throw new Error("Could not read the generated JPEG.");
+        let offset = 2;
+        let hasJfif = false;
+        while (offset + 4 < bytes.length && bytes[offset] === 0xff) {
+          const marker = bytes[offset + 1];
+          if (marker === 0xda || marker === 0xd9) break;
+          const segmentLength = (bytes[offset + 2] << 8) | bytes[offset + 3];
+          if (segmentLength < 2 || offset + 2 + segmentLength > bytes.length)
+            break;
+          const isJfif =
+            marker === 0xe0 &&
+            bytes[offset + 4] === 0x4a &&
+            bytes[offset + 5] === 0x46 &&
+            bytes[offset + 6] === 0x49 &&
+            bytes[offset + 7] === 0x46 &&
+            bytes[offset + 8] === 0x00;
+          if (isJfif) {
+            bytes[offset + 11] = 1;
+            bytes[offset + 12] = (outputDpi >> 8) & 0xff;
+            bytes[offset + 13] = outputDpi & 0xff;
+            bytes[offset + 14] = (outputDpi >> 8) & 0xff;
+            bytes[offset + 15] = outputDpi & 0xff;
+            hasJfif = true;
+            break;
+          }
+          offset += 2 + segmentLength;
+        }
+        if (hasJfif) return new Blob([bytes], { type: "image/jpeg" });
+        const segment = makeJfifSegment();
+        const output = new Uint8Array(bytes.length + segment.length);
+        output.set(bytes.subarray(0, 2), 0);
+        output.set(segment, 2);
+        output.set(bytes.subarray(2), 2 + segment.length);
+        return new Blob([output], { type: "image/jpeg" });
+      }
+
+      function xmlEscape(value) {
+        return String(value).replace(/[&<>"']/g, (character) => {
+          const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&apos;",
+          };
+          return entities[character];
+        });
+      }
+
+      function makeApp1Segment(payload) {
+        const segmentLength = payload.length + 2;
+        if (segmentLength > 0xffff)
+          throw new Error("The image metadata is too large to embed.");
+        const segment = new Uint8Array(payload.length + 4);
+        segment[0] = 0xff;
+        segment[1] = 0xe1;
+        segment[2] = (segmentLength >> 8) & 0xff;
+        segment[3] = segmentLength & 0xff;
+        segment.set(payload, 4);
+        return segment;
+      }
+
+      function encodeExifAscii(value) {
+        const encoded = new TextEncoder().encode(value);
+        const bytes = new Uint8Array(encoded.length + 1);
+        bytes.set(encoded);
+        return bytes;
+      }
+
+      function makeExifSegment() {
+        const artist = encodeExifAscii("Dante Razo");
+        const copyright = encodeExifAscii("© Dante Razo");
+        const ifdOffset = 8;
+        const entryCount = 2;
+        const dataOffset = ifdOffset + 2 + entryCount * 12 + 4;
+        const copyrightOffset = dataOffset + artist.length;
+        const tiff = new Uint8Array(copyrightOffset + copyright.length);
+        const view = new DataView(tiff.buffer);
+
+        tiff.set([0x4d, 0x4d], 0);
+        view.setUint16(2, 0x002a, false);
+        view.setUint32(4, ifdOffset, false);
+        view.setUint16(ifdOffset, entryCount, false);
+
+        const artistEntry = ifdOffset + 2;
+        view.setUint16(artistEntry, 0x013b, false);
+        view.setUint16(artistEntry + 2, 2, false);
+        view.setUint32(artistEntry + 4, artist.length, false);
+        view.setUint32(artistEntry + 8, dataOffset, false);
+
+        const copyrightEntry = artistEntry + 12;
+        view.setUint16(copyrightEntry, 0x8298, false);
+        view.setUint16(copyrightEntry + 2, 2, false);
+        view.setUint32(copyrightEntry + 4, copyright.length, false);
+        view.setUint32(copyrightEntry + 8, copyrightOffset, false);
+
+        view.setUint32(ifdOffset + 2 + entryCount * 12, 0, false);
+        tiff.set(artist, dataOffset);
+        tiff.set(copyright, copyrightOffset);
+
+        const header = new Uint8Array([0x45, 0x78, 0x69, 0x66, 0x00, 0x00]);
+        const payload = new Uint8Array(header.length + tiff.length);
+        payload.set(header);
+        payload.set(tiff, header.length);
+        return makeApp1Segment(payload);
+      }
+
+      function makeXmpSegment(fileName) {
+        const escapedFileName = xmlEscape(fileName);
+        const packet = `<?xpacket begin="\uFEFF" id="W5M0MpCehiHzreSzNTczkc9d"?>
+          <x:xmpmeta xmlns:x="adobe:ns:meta/">
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+              <rdf:Description rdf:about=""
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/"
+                xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
+                xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+                <dc:creator><rdf:Seq><rdf:li>Dante Razo</rdf:li></rdf:Seq></dc:creator>
+                <dc:title><rdf:Alt><rdf:li xml:lang="x-default">${escapedFileName}</rdf:li></rdf:Alt></dc:title>
+                <cc:AttributionName>Dante Razo</cc:AttributionName>
+                <photoshop:CaptionWriter>Dante Razo</photoshop:CaptionWriter>
+                <photoshop:Credit>Dante Razo</photoshop:Credit>
+                <xmpMM:PreservedFileName>${escapedFileName}</xmpMM:PreservedFileName>
+                <xmp:Processed>True</xmp:Processed>
+              </rdf:Description>
+            </rdf:RDF>
+          </x:xmpmeta>
+          <?xpacket end="w"?>`;
+        const prefix = new TextEncoder().encode(
+          "http://ns.adobe.com/xap/1.0/\0",
+        );
+        const xml = new TextEncoder().encode(packet);
+        const payload = new Uint8Array(prefix.length + xml.length);
+        payload.set(prefix);
+        payload.set(xml, prefix.length);
+        return makeApp1Segment(payload);
+      }
+
+      function addJpegMetadata(buffer, fileName) {
+        const bytes = new Uint8Array(buffer);
+        if (bytes[0] !== 0xff || bytes[1] !== 0xd8)
+          throw new Error("Could not add metadata to the generated JPEG.");
+        let insertionPoint = 2;
+        if (
+          bytes[2] === 0xff &&
+          bytes[3] === 0xe0 &&
+          bytes[6] === 0x4a &&
+          bytes[7] === 0x46 &&
+          bytes[8] === 0x49 &&
+          bytes[9] === 0x46 &&
+          bytes[10] === 0x00
+        ) {
+          const segmentLength = (bytes[4] << 8) | bytes[5];
+          insertionPoint += 2 + segmentLength;
+        }
+        const segments = [makeExifSegment(), makeXmpSegment(fileName)];
+        const insertedLength = segments.reduce(
+          (total, segment) => total + segment.length,
+          0,
+        );
+        const output = new Uint8Array(bytes.length + insertedLength);
+        output.set(bytes.subarray(0, insertionPoint), 0);
+        let offset = insertionPoint;
+        for (const segment of segments) {
+          output.set(segment, offset);
+          offset += segment.length;
+        }
+        output.set(bytes.subarray(insertionPoint), offset);
+        return new Blob([output], { type: "image/jpeg" });
+      }
+
+      async function processImage(file, metadataName) {
+        const bitmap = await createImageBitmap(file);
+        const canvas = document.createElement("canvas");
+        canvas.width = outputWidth;
+        canvas.height = outputHeight;
+        const context = canvas.getContext("2d", { alpha: false });
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, outputWidth, outputHeight);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = "high";
+        const scale = Math.min(
+          outputWidth / bitmap.width,
+          outputHeight / bitmap.height,
+        );
+        const width = Math.round(bitmap.width * scale);
+        const height = Math.round(bitmap.height * scale);
+        const left = Math.floor((outputWidth - width) / 2);
+        const top = Math.floor((outputHeight - height) / 2);
+        context.drawImage(bitmap, left, top, width, height);
+        bitmap.close();
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob(
+            (result) =>
+              result
+                ? resolve(result)
+                : reject(new Error("JPEG encoding failed.")),
+            "image/jpeg",
+            0.92,
+          );
+        });
+        const withDpi = setJpegDpi(await blob.arrayBuffer());
+        return addJpegMetadata(await withDpi.arrayBuffer(), metadataName);
+      }
+
+      function outputName(fileName, index) {
+        const stem =
+          fileName
+            .replace(/\.[^.]+$/, "")
+            .replace(/[\\/:*?"<>|]/g, "-")
+            .trim() || `photo-${index + 1}`;
+        return `${stem}-1500x1000-150dpi.jpg`;
+      }
+
+      fileInput.addEventListener("change", () => {
+        addFiles(fileInput.files);
+        fileInput.value = "";
+      });
+
+      for (const eventName of ["dragenter", "dragover"]) {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.add("is-over");
+        });
+      }
+
+      for (const eventName of ["dragleave", "drop"]) {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.remove("is-over");
+        });
+      }
+
+      dropzone.addEventListener("drop", (event) =>
+        addFiles(event.dataTransfer.files),
+      );
+      queueElement.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-remove]");
+        if (!button || isProcessing) return;
+        const index = jobs.findIndex((job) => job.id === button.dataset.remove);
+        if (index < 0) return;
+        revokeJob(jobs[index]);
+        jobs.splice(index, 1);
+        render();
+      });
+
+      processButton.addEventListener("click", async () => {
+        if (isProcessing) return;
+        isProcessing = true;
+        processButton.textContent = "Processing...";
+        render();
+        let completed = 0;
+        for (const [index, job] of jobs.entries()) {
+          if (job.outputUrl) URL.revokeObjectURL(job.outputUrl);
+          job.outputUrl = null;
+          job.state = "working";
+          job.message = "Resizing...";
+          liveStatus.textContent = `Processing ${index + 1} of ${jobs.length}`;
+          render();
+          try {
+            const name = outputName(job.file.name, index);
+            const metadataName = name.replace(/\.jpg$/i, "");
+            const output = await processImage(job.file, metadataName);
+            job.outputUrl = URL.createObjectURL(output);
+            job.outputName = name;
+            job.state = "ready";
+            job.message = `1500 × 1000 px · 150 DPI · ${formatBytes(output.size)}`;
+            completed += 1;
+          } catch (error) {
+            job.state = "error";
+            job.message = error.message || "Could not process this image.";
+          }
+          render();
+        }
+        isProcessing = false;
+        processButton.textContent = "Process photos";
+        liveStatus.textContent = `${completed} of ${jobs.length} ${jobs.length === 1 ? "photo" : "photos"} processed.`;
+        render();
+      });
+
+      clearButton.addEventListener("click", () => {
+        for (const job of jobs) revokeJob(job);
+        jobs.splice(0, jobs.length);
+        liveStatus.textContent = "Queue cleared.";
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
