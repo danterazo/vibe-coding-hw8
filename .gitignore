@@ -1,2 +1,29 @@
+# MacOS
 *.DS_Store*
 
+# WSL2
+*:Zone.Identifier
+
+# Compiled
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+/environments/directml/.venv/
+
+# Runtime activity logs
+project/logs/
+
+# Sync conflicts
+*.sync-conflict-*
+.syncthing.*.tmp
+
+# Ephemeral files
+~$*
+
+# Buggy settings file, changes depending on Python directory
+.vscode/settings.json
+
+# Secrets
+.env
