@@ -144,3 +144,18 @@ For Japanese albums and artist, place their native name (kanji, kana) in parenth
 Discogs artist name variations containing Japanese script are now appended in parentheses after the romanized artist name. When native title variation
 fields are present, they are displayed the same way after the romanized album title. Existing names that already contain Japanese are left as-is; when
 Discogs supplies no native variant, the available title/name is preserved without guessing a translation.
+
+## Prompt 9 (make cassette filtering easier)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Why can't I filter on cassettes? My library has plenty of cassettes, e.g. George Strait, Tokenai Namae, etc.
+
+### Output 9
+
+The checkbox filter included any checked type, and all physical types start checked, so selecting Cassette alone did not narrow the pool. Added
+one-click Physical Only, Cassette Only, and All Media presets while retaining individual checkboxes. Verified Cassette Only submits only `cassette`
+and returns a cassette-format result; the shortcut controls fit on mobile.
