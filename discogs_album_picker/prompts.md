@@ -129,3 +129,18 @@ somewhere somehow, that this was configured in `.env`
 The PAT field stays blank and disabled when a server-side PAT is configured, with a dot mask as its placeholder and a note that identifies the source
 as local `.env`. The config endpoint returns only the username, source label, and configured boolean; it never returns the PAT. Browser checks
 confirmed the empty field, disabled state, mask, and note.
+
+## Prompt 8 (show Japanese native names)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+For Japanese albums and artist, place their native name (kanji, kana) in parenthesis after the romaji name
+
+### Output 8
+
+Discogs artist name variations containing Japanese script are now appended in parentheses after the romanized artist name. When native title variation
+fields are present, they are displayed the same way after the romanized album title. Existing names that already contain Japanese are left as-is; when
+Discogs supplies no native variant, the available title/name is preserved without guessing a translation.

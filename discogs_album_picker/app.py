@@ -32,6 +32,7 @@ SUPPORTED_MEDIA_TYPES = {
     'digital',
 }
 DIGITAL_FORMAT_NAMES = {'digital media', 'file', 'download', 'streaming'}
+JAPANESE_TEXT = re.compile(r'[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]')
 collection_cache: dict[str, tuple[float, int, list[dict[str, Any]]]] = {}
 
 
@@ -146,6 +147,27 @@ def media_descriptors(formats: Any) -> list[dict[str, str]]:
     return descriptors
 
 
+def append_native_name(romanized: str, native: Any) -> str:
+    native_name = str(native or '').strip()
+    if not romanized or not JAPANESE_TEXT.search(native_name):
+        return romanized
+    if JAPANESE_TEXT.search(romanized) or native_name.casefold() in romanized.casefold():
+        return romanized
+    return f'{romanized} ({native_name})'
+
+
+def native_title(details: dict[str, Any], title: str) -> str:
+    romanized_title = str(details.get('title_romaji') or details.get('romaji_title') or title).strip()
+    native_value = next(
+        (details.get(key) for key in ('native_title', 'title_native', 'title_anv', 'original_title', 'title_variation') if details.get(key)),
+        None,
+    )
+    source_title = str(details.get('title') or '').strip()
+    if native_value is None and source_title != romanized_title and JAPANESE_TEXT.search(source_title):
+        native_value = source_title
+    return append_native_name(romanized_title, native_value)
+
+
 def collection_releases(page_data: dict[str, Any]) -> list[dict[str, Any]]:
     results = []
     for release in page_data.get('releases', []):
@@ -156,10 +178,17 @@ def collection_releases(page_data: dict[str, Any]) -> list[dict[str, Any]]:
         if not media:
             continue
         artists = details.get('artists') or []
-        artist_names = [str(artist.get('name', '')).strip() for artist in artists if artist.get('name')]
+        artist_names = []
+        for artist in artists:
+            if not isinstance(artist, dict):
+                continue
+            name = str(artist.get('name', '')).strip()
+            if name:
+                artist_names.append(append_native_name(name, artist.get('anv')))
+        title = str(details.get('title') or 'Untitled release')
         results.append(
             {
-                'title': str(details.get('title') or 'Untitled release'),
+                'title': native_title(details, title),
                 'artist': ', '.join(artist_names) or 'Unknown artist',
                 'media_types': sorted({medium['type'] for medium in media}),
                 'media': media,
