@@ -49,3 +49,20 @@ possible, so when I return from work for lunch, it's all complete or at least in
 
 I completed the three selected apps and verified their core workflows. See the app-specific outputs in the Pantry Tracker and Photo Process logs; the
 Discogs picker implementation and live-API caveat are documented above.
+
+## Prompt 3 (school-use notes)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Make the photo processor modular, s.t. anyone could put their name and then get attribution in the image. Just make the default name / text box value
+"Dante Razo". Add a note to use responsibly as this app (and the others, if they need notes too) is just for school
+
+Aim to have code in one file per project, like the instructions request
+
+### Output 3
+
+Added a school-project note reminding users to access only collections they are authorized to use. The Discogs token remains in the current tab and is
+not saved.
