@@ -437,6 +437,15 @@
         display: none;
       }
 
+      .school-note {
+        margin: 22px 0 0;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
       @keyframes arrive {
         from {
           opacity: 0;
@@ -734,6 +743,10 @@
         </div>
         <div id="item-list" aria-live="polite"></div>
       </section>
+      <p class="school-note">
+        School project. Best-by dates are reminders, not a guarantee of safety;
+        check labels and use your judgment.
+      </p>
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
