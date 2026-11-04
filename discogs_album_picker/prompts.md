@@ -79,3 +79,20 @@ Actually, it seems messier with just one file, so have a python file and HTML on
 ### Output 4
 
 Kept the Python server and HTML interface as separate runtime files and removed the test module. The existing seven-test suite passed before removal.
+
+## Prompt 5 (media filters and iconography)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Add iconography to the Discogs page. Make it more obvious that something is a CD, cassette, or LP, or whatever. Use title case wherever applicable.
+Add a filter feature with checkboxes for different media types — support digital media, but have it unchecked by default.
+
+## Output 5
+
+Added icon-and-label media filters for LP, Vinyl, CD, Cassette, DVD, Blu-ray, Other Physical, and Digital. Physical categories start checked and
+Digital starts unchecked. The backend now keeps digital releases available and filters picks using the selected media types. Mocked browser checks
+verified the submitted filters and rendered format chips; credential-free backend checks covered Digital, CD, Cassette, and LP selection. The Discogs
+form and media labels use Title Case.

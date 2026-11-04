@@ -184,6 +184,71 @@
         text-transform: uppercase;
       }
 
+      .media-filters {
+        margin: 20px 0 16px;
+        padding: 0;
+        border: 0;
+      }
+
+      .media-filters legend {
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .media-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .media-option {
+        display: flex;
+        min-height: 36px;
+        align-items: center;
+        gap: 7px;
+        padding: 0 8px;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        background: var(--white);
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .media-option:has(input:checked) {
+        border-color: #91b9ae;
+        background: var(--teal-light);
+      }
+
+      .media-option input {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 auto;
+        margin: 0;
+        accent-color: var(--teal);
+      }
+
+      .media-icon {
+        display: inline-grid;
+        width: 20px;
+        height: 20px;
+        flex: 0 0 20px;
+        place-items: center;
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .filter-note {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
       .field input {
         width: 100%;
         min-height: 42px;
@@ -376,6 +441,9 @@
       }
 
       .media-list li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         padding: 6px 8px;
         border: 1px solid #98bab1;
         border-radius: 3px;
@@ -501,19 +569,19 @@
   <body>
     <header class="topbar">
       <div class="brand">
-        <span class="brand-mark" aria-hidden="true"></span> Discogs / side A
+        <span class="brand-mark" aria-hidden="true"></span> Discogs / Side A
       </div>
       <div class="local-status" id="local-status">
         <span class="status-dot" aria-hidden="true"></span
-        ><span>Local session</span>
+        ><span>Local Session</span>
       </div>
     </header>
 
     <main>
       <section class="heading-row" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Collection shuffle</p>
-          <h1 id="page-title">What goes on next?</h1>
+          <p class="eyebrow">Collection Shuffle</p>
+          <h1 id="page-title">What Goes on Next?</h1>
         </div>
         <p class="heading-note">
           A random physical release from your Discogs collection.
@@ -522,11 +590,11 @@
 
       <div class="picker-layout">
         <section class="controls" aria-labelledby="control-title">
-          <h2 class="control-title" id="control-title">Your collection</h2>
+          <h2 class="control-title" id="control-title">Your Collection</h2>
           <form id="picker-form">
             <div class="field-grid">
               <div class="field">
-                <label for="username">Discogs username</label>
+                <label for="username">Discogs Username</label>
                 <input
                   id="username"
                   name="username"
@@ -536,7 +604,7 @@
                 />
               </div>
               <div class="field">
-                <label for="token">Personal access token</label>
+                <label for="token">Personal Access Token</label>
                 <input
                   id="token"
                   name="token"
@@ -546,8 +614,85 @@
                 />
               </div>
             </div>
+            <fieldset class="media-filters">
+              <legend>Media Types</legend>
+              <div class="media-options">
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="lp"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">◉</span
+                  ><span>LP</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="vinyl"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">◉</span
+                  ><span>Vinyl</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="cd"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">◎</span
+                  ><span>CD</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="cassette"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">▣</span
+                  ><span>Cassette</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="dvd"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">▱</span
+                  ><span>DVD</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="blu-ray"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">◍</span
+                  ><span>Blu-ray</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="other-physical"
+                    checked
+                  /><span class="media-icon" aria-hidden="true">▤</span
+                  ><span>Other Physical</span></label
+                >
+                <label class="media-option"
+                  ><input
+                    type="checkbox"
+                    name="media_types"
+                    value="digital"
+                  /><span class="media-icon" aria-hidden="true">↓</span
+                  ><span>Digital</span></label
+                >
+              </div>
+              <p class="filter-note">Digital is off by default.</p>
+            </fieldset>
             <button class="button pick-button" id="pick-button" type="submit">
-              Pick an album
+              Pick an Album
             </button>
             <p class="privacy-note">
               School project. Use only a collection you are authorized to
@@ -558,11 +703,11 @@
           </form>
         </section>
 
-        <section class="album-area" aria-label="Selected album">
+        <section class="album-area" aria-label="Selected Album">
           <div class="album-frame" id="album-frame" aria-live="polite">
             <div class="cover-wrap">
               <div class="cover-placeholder" id="cover-placeholder">
-                Waiting for a record
+                Waiting for a Record
               </div>
               <img
                 class="cover-image"
@@ -572,11 +717,11 @@
               />
             </div>
             <div class="album-info">
-              <p class="album-kicker" id="album-kicker">Your next listen</p>
+              <p class="album-kicker" id="album-kicker">Your Next Listen</p>
               <p class="album-artist" id="album-artist"></p>
-              <h2 class="album-title" id="album-title">The needle is up.</h2>
+              <h2 class="album-title" id="album-title">The Needle Is Up.</h2>
               <p class="album-year" id="album-year"></p>
-              <p class="media-label">Media</p>
+              <p class="media-label">Media Types</p>
               <ul class="media-list" id="media-list"></ul>
               <a
                 class="discogs-link"
@@ -610,19 +755,35 @@
       const coverPlaceholder = document.querySelector("#cover-placeholder");
       const mediaList = document.querySelector("#media-list");
       const discogsLink = document.querySelector("#discogs-link");
+      const mediaIcons = {
+        lp: "◉",
+        vinyl: "◉",
+        cd: "◎",
+        cassette: "▣",
+        dvd: "▱",
+        "blu-ray": "◍",
+        "other-physical": "▤",
+        digital: "↓",
+      };
 
       function renderAlbum(album) {
         document.querySelector("#album-kicker").textContent =
-          "Selected from your collection";
+          "Selected From Your Collection";
         document.querySelector("#album-artist").textContent = album.artist;
         document.querySelector("#album-title").textContent = album.title;
         document.querySelector("#album-year").textContent = album.year
           ? `Released ${album.year}`
-          : "Release year not listed";
+          : "Release Year Not Listed";
         mediaList.replaceChildren();
         for (const medium of album.media) {
           const item = document.createElement("li");
-          item.textContent = medium;
+          const icon = document.createElement("span");
+          icon.className = "media-icon";
+          icon.setAttribute("aria-hidden", "true");
+          icon.textContent = mediaIcons[medium.type] || "▤";
+          const label = document.createElement("span");
+          label.textContent = medium.label;
+          item.append(icon, label);
           mediaList.append(item);
         }
         if (album.image) {
@@ -633,7 +794,7 @@
         } else {
           coverImage.removeAttribute("src");
           coverImage.hidden = true;
-          coverPlaceholder.textContent = "Cover art unavailable";
+          coverPlaceholder.textContent = "Cover Art Unavailable";
           coverPlaceholder.hidden = false;
         }
         if (album.url) {
@@ -646,14 +807,22 @@
 
       coverImage.addEventListener("error", () => {
         coverImage.hidden = true;
-        coverPlaceholder.textContent = "Cover art unavailable";
+        coverPlaceholder.textContent = "Cover Art Unavailable";
         coverPlaceholder.hidden = false;
       });
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         errorMessage.textContent = "";
-        statusMessage.textContent = "Looking through your collection...";
+        const selectedMediaTypes = Array.from(
+          form.querySelectorAll('input[name="media_types"]:checked'),
+          (input) => input.value,
+        );
+        if (selectedMediaTypes.length === 0) {
+          errorMessage.textContent = "Select at least one media type.";
+          return;
+        }
+        statusMessage.textContent = "Looking Through Your Collection...";
         statusMessage.classList.remove("is-error");
         pickButton.disabled = true;
         pickButton.textContent = "Searching...";
@@ -664,21 +833,22 @@
             body: JSON.stringify({
               username: usernameInput.value.trim(),
               token: tokenInput.value,
+              media_types: selectedMediaTypes,
             }),
           });
           const result = await response.json();
           if (!response.ok)
             throw new Error(result.error || "The album could not be selected.");
           renderAlbum(result.album);
-          statusMessage.textContent = "Ready for a spin.";
+          statusMessage.textContent = "Ready for a Spin.";
         } catch (error) {
           errorMessage.textContent =
             error.message || "Could not reach the local picker.";
-          statusMessage.textContent = "No album selected.";
+          statusMessage.textContent = "No Album Selected.";
           statusMessage.classList.add("is-error");
         } finally {
           pickButton.disabled = false;
-          pickButton.textContent = "Pick another album";
+          pickButton.textContent = "Pick Another Album";
         }
       });
 
