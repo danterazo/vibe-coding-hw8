@@ -110,6 +110,22 @@ the field on the website since you already have a token. I also have DISCOGS_USE
 ### Output 6
 
 The server reads `DISCOGS_PAT` and `DISCOGS_USERNAME` from the process environment or the local `.env`, including the existing colon-separated format.
-`/api/config` returns only the username and whether a PAT is configured, never the PAT. A configured PAT leaves the browser field blank and disabled;
-otherwise manual token entry remains available. The username is prefilled when configured. Browser checks confirmed the configured state without
-displaying credential values.
+`/api/config` returns only the username, source label, and configured boolean; it never returns the PAT. A configured PAT leaves the browser field
+blank and disabled; otherwise manual token entry remains available. The username is prefilled when configured. Browser checks confirmed the configured
+state without displaying credential values.
+
+## Prompt 7 (show configured PAT status)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Or, you could just have dots in the PAT field with an arbitrary number of them to show that it was read from the env. Make sure that the user knows,
+somewhere somehow, that this was configured in `.env`
+
+### Output 7
+
+The PAT field stays blank and disabled when a server-side PAT is configured, with a dot mask as its placeholder and a note that identifies the source
+as local `.env`. The config endpoint returns only the username, source label, and configured boolean; it never returns the PAT. Browser checks
+confirmed the empty field, disabled state, mask, and note.

@@ -781,10 +781,13 @@
             tokenInput.value = "";
             tokenInput.required = false;
             tokenInput.disabled = true;
-            tokenInput.placeholder = "Configured on server";
+            tokenInput.placeholder = "••••••••••••";
             tokenField.classList.add("is-server-configured");
-            privacyNote.textContent =
-              "A server-side token is configured. Its value is never sent to the page.";
+            const sourceNote =
+              configuration.token_source === "local .env"
+                ? "The PAT was loaded from the local .env file."
+                : "A PAT was loaded from the server environment.";
+            privacyNote.textContent = `${sourceNote} The dots are a display mask; the actual PAT stays on the server.`;
           } else {
             tokenInput.required = true;
             tokenInput.disabled = false;

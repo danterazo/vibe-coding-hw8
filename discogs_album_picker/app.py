@@ -63,7 +63,10 @@ def load_local_environment(path: Path) -> dict[str, str]:
 
 LOCAL_ENV = load_local_environment(APP_DIR / '.env')
 DISCOGS_USERNAME = (os.environ.get('DISCOGS_USERNAME') or LOCAL_ENV.get('DISCOGS_USERNAME', '')).strip()
-DISCOGS_PAT = (os.environ.get('DISCOGS_PAT') or LOCAL_ENV.get('DISCOGS_PAT', '')).strip()
+PROCESS_DISCOGS_PAT = os.environ.get('DISCOGS_PAT', '').strip()
+FILE_DISCOGS_PAT = LOCAL_ENV.get('DISCOGS_PAT', '').strip()
+DISCOGS_PAT = PROCESS_DISCOGS_PAT or FILE_DISCOGS_PAT
+DISCOGS_PAT_SOURCE = 'process environment' if PROCESS_DISCOGS_PAT else 'local .env' if FILE_DISCOGS_PAT else ''
 
 
 class PickerError(Exception):
@@ -220,6 +223,7 @@ class PickerHandler(BaseHTTPRequestHandler):
                 {
                     'username': DISCOGS_USERNAME,
                     'token_configured': bool(DISCOGS_PAT),
+                    'token_source': DISCOGS_PAT_SOURCE,
                 },
             )
             return
