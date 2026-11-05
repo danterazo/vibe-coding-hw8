@@ -175,3 +175,190 @@ defaults. If I only want cassettes, I uncheck everything except cassettes
 Removed the extra preset buttons and kept only the existing media checkboxes. Physical formats remain checked by default and Digital remains
 unchecked; the helper text explains that checked formats are included. Browser verification confirmed the Cassette-only checkbox selection submits
 only `cassette` and renders a cassette-format result.
+
+## Prompt 11 (increase app scale)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Make the Discogs app and others 125% scale so they're easier to read
+
+### Output 11
+
+Applied a 125% page scale with a smaller minimum layout width for mobile. Browser checks at mobile, tablet, and desktop sizes found no horizontal
+overflow; the token status and media filters remain readable.
+
+## Prompt 12 (fallback to master artwork)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+If album artwork isn't present for a specific release, retrieve it from the master release instead. For example, Mass of the Fermenting Dregs' No New
+World cassette
+
+### Output 12
+
+The picker now carries each release's master ID and fetches master artwork only after selecting a release with no cover image or thumbnail. The No New
+World cassette release has no release-level artwork, while its master has an image; the full selection path verified that fallback. Master image URLs
+are cached in memory, and failed master lookups leave the existing artwork placeholder in place.
+
+## Prompt 13 (show release tracklists)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Retrieve and display trakclists for each release as well
+
+### Output 13
+
+Added release-specific tracklists with track positions, titles, durations, headings, and subtracks. Lookups are cached; unavailable tracklists do not
+prevent album selection.
+
+Backend and renderer checks pass. Live browser verification is blocked because the preview server is not running.
+
+Verification follow-up (2026-11-04): Started the local preview with approval and verified actual collection picks display release-specific tracks,
+positions, durations, and headings in the browser.
+
+## Prompt 14 (show release facts and artist background)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Add genres for the album display on the Discogs app. Show release date (exact, if known, otherwise year is fine), genres, release country, fun facts
+like that within reason. If you can easily tell _where_ a band is from, like which city, put that as well
+
+### Output 14
+
+Added exact release dates with year fallback, genres, styles, release country, labels, and a short source-linked artist background. Hometowns appear
+when stated in the Discogs profile; release country is kept separate from artist origin.
+
+Live API and focused backend/renderer checks pass. Browser verification remains blocked by the unavailable local server.
+
+Verification follow-up (2026-11-04): Actual browser picks display precise dates, genres, styles, release countries, labels, and linked artist
+backgrounds, including explicit hometowns when present in Discogs profiles. Desktop and mobile-width checks found no horizontal overflow.
+
+## Prompt 15 (balance the header subtitle)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: subtitle screenshot
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Fix the wrapping here on the site
+
+### Output 15
+
+Balanced the header subtitle across two lines so "collection." is no longer stranded. Verified the new line breaks in the existing browser with no
+horizontal overflow.
+
+## Prompt 16 (show only available collection formats)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Do I even have any DVDs or Blu-Rays in my library? Let's make the media types hide if not present anywhere in the source library. Also, combine LP and
+Vinyl into just "Vinyl" on the frontend (but, if they're truly separate on Discogs' end, then make the filter apply both filters)
+
+### Output 16
+
+Your collection has six entries that include DVDs, all bundled with CDs, and no Blu-rays. The picker now loads available formats across the entire
+collection through `POST /api/collection`, hides absent types, and refreshes when the source credentials change. Vinyl combines the internal LP and
+other-vinyl categories; Digital stays unchecked by default. Album badges also display LPs as Vinyl.
+
+Live collection and focused backend/frontend checks pass, including pagination, cache reuse, source changes, and stale-response handling. Browser
+verification remains blocked by the unavailable local server.
+
+Verification follow-up (2026-11-04): The live browser hides Blu-ray, keeps the collection's bundled DVD format, and shows one Vinyl control. Real
+cassette-only requests submit `cassette`; Vinyl requests submit both `lp` and `vinyl`. Digital remains unchecked by default.
+
+## Prompt 17 (give each app a visible theme)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Add nice theming to each app. Just a basic color would be fine too as long as its visible. In the camera app, use the full "Canon R50" instead of just
+R50
+
+### Output 17
+
+Added a pale blue background and deep blue-teal header to Discogs Album Picker, with white header text and contrasting coral accents. Formatting and
+source checks pass; rendered verification remains blocked because the Discogs server is unavailable.
+
+Verification follow-up (2026-11-04): Verified the blue-teal header in the live Discogs page and checked the populated layout at desktop and mobile
+widths without horizontal overflow.
+
+## Prompt 18 (finish interrupted work)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Review this thread for any work that might've been skipped over or interrupted, then finish it
+
+### Output 18
+
+Finished the interrupted Discogs browser checks and left its approved preview running for testing. Verified collection membership and release links
+for three real picks, cassette-only and merged-vinyl filtering, tracklists, release facts, artist background, responsive layout, and tall artwork. The
+No New World cassette's master-artwork fallback also passes with eight tracks.
+
+Publication remains blocked by the 1Password signing error; no signing or authentication settings were changed, and all staged and working changes are
+preserved. The earlier unrelated-release screenshot could not be reproduced; its exact URL is still needed to explain that case.
+
+## Prompt 19 (document credentials and Python style)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: diagnostic screenshot
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Make the photo process app's resize feature optional, and the metadata optional as well, but make it so metadata is checked by default.
+
+Create a README with screenshots (zoomed-in, easily visible) for each app in their folder. Include setup instructions, like how to get a Discogs key
+and provide it to the app. Include descriptions for each app, too. Any assets used by the README should be under ./APPNAME/assets, for example
+
+Also, add comments, type hints, and named args to the python scripts, per my repo's existing styling instructions. Address all errors such as the
+attached
+
+Finally, walk me through how to set up the Discogs app. Can I utilize a .env file that's ignored but still read?
+
+### Output 19
+
+Added a Discogs README with a close-up screenshot in `assets/`, personal-access-token instructions, app-local ignored `.env` configuration, launch and
+restart commands, filters, and security notes. Verified `.env` is ignored and untracked without printing its contents. Added callback/sampler hints,
+named calls, and comments around credentials, cache and artwork behavior. The logging override uses the base-compatible `format` parameter name and
+passes Pylance diagnostics. The restarted server still selects owned releases and does not serve `.env` routes.
+
+## Prompt 20 (strict ownership and filter correctness)
+
+> - **Tool:** GitHub Copilot · model TBD · 2026-11-04
+> - **Session:** continued · attached: none
+> - **Verified:** agent-tested
+> - **Human edits:** none
+
+Fix filtering for the discogs app, and investigate why it shows albums i dont own still. only show owned albums, no wishlist or anything
+
+### Output 20
+
+Reproduced a stale-cache defect: replacing a collection entry without changing the total kept the removed release eligible in the cached pool. Picks
+now require a fresh matching Collection instance, refresh stale pools, and fail closed when membership cannot be verified. Token identity must match
+the requested account. Wantlist and catalogue-only data cannot satisfy the ownership check.
+
+Filter and credential changes clear the displayed album, cancel pending picks, and reject late results. The frontend also checks ownership proof and
+the requested formats before displaying a result. Vinyl expands to both LP and other vinyl server-side as well as in the UI.
+
+Mocked regressions passed for stale membership, malformed/wantlist responses, identity failures, other accounts, and late or wrong-format UI results.
+Live cassette, vinyl, and CD picks returned matching collection-instance IDs for the authenticated account. Discogs currently records Updated Floral
+Experience, release 15571367, in that account's Collection; this is distinct from a Wantlist record. The Discogs server was restarted with approval.

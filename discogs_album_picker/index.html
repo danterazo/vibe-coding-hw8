@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#172a38" />
+    <meta name="theme-color" content="#164c60" />
     <title>Discogs Album Picker</title>
     <style>
       :root {
         color-scheme: light;
         --ink: #172a38;
-        --muted: #647782;
-        --line: #cbd6d6;
-        --paper: #f0f3ef;
-        --white: #fcfdf9;
+        --muted: #4b606c;
+        --line: #b6d2de;
+        --paper: #e1eef6;
+        --white: #fbfdff;
         --teal: #226e69;
         --teal-light: #d7e9e4;
-        --coral: #d75f4e;
+        --coral: #a83e35;
         --yellow: #e6b94e;
         --radius: 5px;
         font-family: "Trebuchet MS", Verdana, sans-serif;
@@ -34,14 +34,17 @@
       }
 
       body {
-        min-width: 320px;
+        width: 80%;
+        min-width: 256px;
         min-height: 100vh;
         margin: 0;
+        transform: scale(1.25);
+        transform-origin: top left;
         background: linear-gradient(
           125deg,
-          #f8f8f1 0%,
+          #edf6fb 0%,
           var(--paper) 58%,
-          #e4ece8 100%
+          #cce4ee 100%
         );
       }
 
@@ -57,14 +60,14 @@
         justify-content: space-between;
         padding: 0 max(24px, calc((100vw - 1120px) / 2));
         border-bottom: 1px solid var(--line);
-        background: rgb(252 253 249 / 74%);
+        background: #164c60;
       }
 
       .brand {
         display: flex;
         gap: 10px;
         align-items: center;
-        color: var(--teal);
+        color: #ffffff;
         font-size: 11px;
         font-weight: 900;
         letter-spacing: 0.1em;
@@ -89,7 +92,7 @@
         display: flex;
         gap: 7px;
         align-items: center;
-        color: var(--muted);
+        color: #ffffff;
         font-size: 11px;
       }
 
@@ -148,6 +151,7 @@
         font-size: 12px;
         line-height: 1.5;
         text-align: right;
+        text-wrap: balance;
       }
 
       .picker-layout {
@@ -218,6 +222,10 @@
         cursor: pointer;
         font-size: 11px;
         font-weight: 800;
+      }
+
+      .media-option[hidden] {
+        display: none;
       }
 
       .media-option:has(input:checked) {
@@ -318,6 +326,53 @@
         min-width: 0;
       }
 
+      .tracklist-section {
+        margin-top: 24px;
+      }
+
+      .tracklist-section h3 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+
+      .tracklist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tracklist li {
+        display: grid;
+        grid-template-columns: minmax(2rem, auto) minmax(0, 1fr) auto;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+
+      .tracklist .track-heading {
+        color: var(--teal);
+        font-weight: 900;
+      }
+
+      .tracklist .subtrack {
+        padding-left: 16px;
+      }
+
+      .track-position,
+      .track-duration,
+      .tracklist-message {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .track-duration {
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
       .album-frame {
         display: grid;
         grid-template-columns: minmax(190px, 0.88fr) minmax(0, 1fr);
@@ -352,7 +407,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
 
       .cover-placeholder {
@@ -420,6 +475,49 @@
         margin: 10px 0 17px;
         color: var(--muted);
         font-size: 12px;
+      }
+
+      .album-facts {
+        display: grid;
+        grid-template-columns: minmax(0, 5.5rem) minmax(0, 1fr);
+        gap: 7px 12px;
+        margin: 0 0 20px;
+        font-size: 12px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+
+      .album-facts[hidden] {
+        display: none;
+      }
+
+      .album-facts dt {
+        color: var(--muted);
+      }
+
+      .album-facts dd {
+        min-width: 0;
+        margin: 0;
+      }
+
+      .artist-background {
+        margin-top: 24px;
+        font-size: 12px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+      }
+
+      .artist-background h3 {
+        margin: 0 0 8px;
+        font-size: 14px;
+      }
+
+      .artist-background p {
+        margin: 0 0 6px;
+      }
+
+      .artist-background a {
+        color: var(--teal);
       }
 
       .media-label {
@@ -621,15 +719,6 @@
                   ><input
                     type="checkbox"
                     name="media_types"
-                    value="lp"
-                    checked
-                  /><span class="media-icon" aria-hidden="true">◉</span
-                  ><span>LP</span></label
-                >
-                <label class="media-option"
-                  ><input
-                    type="checkbox"
-                    name="media_types"
                     value="vinyl"
                     checked
                   /><span class="media-icon" aria-hidden="true">◉</span
@@ -723,6 +812,7 @@
               <p class="album-artist" id="album-artist"></p>
               <h2 class="album-title" id="album-title">The Needle Is Up.</h2>
               <p class="album-year" id="album-year"></p>
+              <dl class="album-facts" id="album-facts" hidden></dl>
               <p class="media-label">Media Types</p>
               <ul class="media-list" id="media-list"></ul>
               <a
@@ -736,6 +826,29 @@
               >
             </div>
           </div>
+          <section
+            class="artist-background"
+            id="artist-background"
+            aria-labelledby="artist-background-heading"
+            hidden
+          >
+            <h3 id="artist-background-heading">Artist Background</h3>
+            <p id="artist-background-text"></p>
+            <a id="artist-background-link" target="_blank" rel="noreferrer"
+              >Discogs Artist Profile</a
+            >
+          </section>
+          <section
+            class="tracklist-section"
+            id="tracklist-section"
+            aria-labelledby="tracklist-heading"
+            aria-live="polite"
+            hidden
+          >
+            <h3 id="tracklist-heading">Tracklist</h3>
+            <ol class="tracklist" id="tracklist"></ol>
+            <p class="tracklist-message" id="tracklist-message" hidden></p>
+          </section>
           <p
             class="selection-status"
             id="selection-status"
@@ -759,9 +872,25 @@
       const coverPlaceholder = document.querySelector("#cover-placeholder");
       const mediaList = document.querySelector("#media-list");
       const discogsLink = document.querySelector("#discogs-link");
+      const albumFacts = document.querySelector("#album-facts");
+      const artistBackground = document.querySelector("#artist-background");
+      const artistBackgroundText = document.querySelector(
+        "#artist-background-text",
+      );
+      const artistBackgroundLink = document.querySelector(
+        "#artist-background-link",
+      );
+      const tracklistSection = document.querySelector("#tracklist-section");
+      const tracklist = document.querySelector("#tracklist");
+      const tracklistMessage = document.querySelector("#tracklist-message");
       const mediaInputs = Array.from(
         form.querySelectorAll('input[name="media_types"]'),
       );
+      let serverTokenConfigured = false;
+      let collectionReady = false;
+      let inventoryRequest = 0;
+      let pickRequest = 0;
+      let pickController = null;
       const mediaIcons = {
         lp: "◉",
         vinyl: "◉",
@@ -773,12 +902,120 @@
         digital: "↓",
       };
 
+      function setAvailableMediaTypes(types) {
+        const available = new Set(types);
+        for (const input of mediaInputs) {
+          const present =
+            input.value === "vinyl"
+              ? available.has("lp") || available.has("vinyl")
+              : available.has(input.value);
+          input.closest(".media-option").hidden = !present;
+          input.disabled = !present;
+        }
+      }
+
+      function getSelectedMediaTypes() {
+        return mediaInputs
+          .filter((input) => input.checked && !input.disabled)
+          .flatMap((input) =>
+            input.value === "vinyl" ? ["lp", "vinyl"] : [input.value],
+          );
+      }
+
+      function clearAlbum() {
+        document.querySelector("#album-kicker").textContent = "Your Collection";
+        document.querySelector("#album-artist").textContent = "";
+        document.querySelector("#album-title").textContent =
+          "No Album Selected.";
+        document.querySelector("#album-year").textContent = "";
+        mediaList.replaceChildren();
+        albumFacts.replaceChildren();
+        albumFacts.hidden = true;
+        artistBackground.hidden = true;
+        artistBackgroundText.textContent = "";
+        artistBackgroundLink.removeAttribute("href");
+        tracklist.replaceChildren();
+        tracklistSection.hidden = true;
+        coverImage.removeAttribute("src");
+        coverImage.hidden = true;
+        coverPlaceholder.hidden = false;
+        coverPlaceholder.textContent = "Waiting for a Record";
+        discogsLink.removeAttribute("href");
+        discogsLink.hidden = true;
+      }
+
+      function invalidatePick() {
+        pickRequest += 1;
+        pickController?.abort();
+        pickController = null;
+        clearAlbum();
+        pickButton.disabled = false;
+        pickButton.textContent = "Pick an Album";
+        statusMessage.textContent = "";
+        errorMessage.textContent = "";
+      }
+
+      function invalidateCollection() {
+        invalidatePick();
+        inventoryRequest += 1;
+        collectionReady = false;
+        setAvailableMediaTypes([]);
+        pickButton.disabled = false;
+        statusMessage.textContent = "";
+        errorMessage.textContent = "";
+      }
+
+      async function loadMediaTypes() {
+        const requestId = ++inventoryRequest;
+        collectionReady = false;
+        setAvailableMediaTypes([]);
+        if (
+          !usernameInput.value.trim() ||
+          (!serverTokenConfigured && !tokenInput.value.trim())
+        ) {
+          return;
+        }
+        pickButton.disabled = true;
+        statusMessage.textContent = "Loading Collection Formats...";
+        statusMessage.classList.remove("is-error");
+        errorMessage.textContent = "";
+        try {
+          const response = await fetch("/api/collection", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: usernameInput.value.trim(),
+              token: tokenInput.value,
+            }),
+          });
+          const inventory = await response.json();
+          if (requestId !== inventoryRequest) return;
+          if (!response.ok || !Array.isArray(inventory.media_types)) {
+            throw new Error(
+              inventory.error || "Collection formats unavailable.",
+            );
+          }
+          setAvailableMediaTypes(inventory.media_types);
+          collectionReady = true;
+          statusMessage.textContent = "Collection Ready.";
+        } catch (error) {
+          if (requestId !== inventoryRequest) return;
+          errorMessage.textContent =
+            error.message || "Could not load collection formats.";
+          statusMessage.textContent = "Collection Unavailable.";
+          statusMessage.classList.add("is-error");
+        } finally {
+          if (requestId === inventoryRequest) pickButton.disabled = false;
+        }
+      }
+
       async function loadConfiguration() {
         pickButton.disabled = true;
         try {
           const response = await fetch("/api/config", { cache: "no-store" });
           if (!response.ok) throw new Error("Configuration unavailable.");
           const configuration = await response.json();
+          serverTokenConfigured = Boolean(configuration.token_configured);
           if (configuration.username) {
             usernameInput.value = configuration.username;
           }
@@ -810,18 +1047,126 @@
         } finally {
           pickButton.disabled = false;
         }
+        await loadMediaTypes();
       }
 
+      for (const input of [usernameInput, tokenInput]) {
+        input.addEventListener("input", invalidateCollection);
+        input.addEventListener("change", loadMediaTypes);
+      }
+      for (const input of mediaInputs) {
+        input.addEventListener("change", invalidatePick);
+      }
+      setAvailableMediaTypes([]);
       loadConfiguration();
+
+      function renderTracklist(tracks) {
+        tracklist.replaceChildren();
+        tracklistSection.hidden = false;
+        function appendTracks(entries, nested = false) {
+          for (const track of entries) {
+            if (!track || typeof track !== "object") continue;
+            const item = document.createElement("li");
+            item.classList.toggle("subtrack", nested);
+            item.classList.toggle(
+              "track-heading",
+              track.type_ === "heading" || track.type_ === "index",
+            );
+            const position = document.createElement("span");
+            position.className = "track-position";
+            position.textContent = track.position || "";
+            const title = document.createElement("span");
+            title.textContent = track.title || "Untitled Track";
+            const duration = document.createElement("span");
+            duration.className = "track-duration";
+            duration.textContent = track.duration || "";
+            item.append(position, title, duration);
+            tracklist.append(item);
+            if (Array.isArray(track.sub_tracks)) {
+              appendTracks(track.sub_tracks, true);
+            }
+          }
+        }
+        if (Array.isArray(tracks)) appendTracks(tracks);
+        tracklistMessage.hidden = tracklist.children.length > 0;
+        tracklistMessage.textContent = Array.isArray(tracks)
+          ? "No Tracks Listed."
+          : "Tracklist Unavailable.";
+      }
+
+      function formatReleaseDate(released, fallbackYear) {
+        const parts = String(released || "").match(
+          /^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/,
+        );
+        if (parts && Number(parts[1]) > 0) {
+          const year = Number(parts[1]);
+          const month = Number(parts[2]);
+          const day = Number(parts[3]);
+          const date = new Date(Date.UTC(year, month - 1, day));
+          if (
+            date.getUTCFullYear() === year &&
+            date.getUTCMonth() === month - 1 &&
+            date.getUTCDate() === day
+          ) {
+            return new Intl.DateTimeFormat("en", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC",
+            }).format(date);
+          }
+          return parts[1];
+        }
+        return fallbackYear ? String(fallbackYear) : "";
+      }
+
+      function renderReleaseFacts(album) {
+        const releaseDate = formatReleaseDate(album.released, album.year);
+        document.querySelector("#album-year").textContent = releaseDate
+          ? `Released ${releaseDate}`
+          : "Release Date Not Listed";
+        albumFacts.replaceChildren();
+        for (const [label, value] of [
+          [
+            "Genres",
+            Array.isArray(album.genres) ? album.genres.join(", ") : "",
+          ],
+          [
+            "Styles",
+            Array.isArray(album.styles) ? album.styles.join(", ") : "",
+          ],
+          ["Release Country", album.country],
+          [
+            "Labels",
+            Array.isArray(album.labels) ? album.labels.join(", ") : "",
+          ],
+        ]) {
+          if (!value) continue;
+          const term = document.createElement("dt");
+          term.textContent = label;
+          const description = document.createElement("dd");
+          description.textContent = value;
+          albumFacts.append(term, description);
+        }
+        albumFacts.hidden = albumFacts.children.length === 0;
+        const background = album.artist_background;
+        artistBackground.hidden = !background?.summary;
+        artistBackgroundText.textContent = background?.summary || "";
+        artistBackgroundLink.removeAttribute("href");
+        if (background?.summary && background.url) {
+          artistBackgroundLink.href = background.url;
+        }
+        artistBackgroundLink.textContent = background?.name
+          ? `${background.name} on Discogs`
+          : "Discogs Artist Profile";
+      }
 
       function renderAlbum(album) {
         document.querySelector("#album-kicker").textContent =
-          "Selected From Your Collection";
+          `Owned by ${album.collection_owner}`;
         document.querySelector("#album-artist").textContent = album.artist;
         document.querySelector("#album-title").textContent = album.title;
-        document.querySelector("#album-year").textContent = album.year
-          ? `Released ${album.year}`
-          : "Release Year Not Listed";
+        renderReleaseFacts(album);
         mediaList.replaceChildren();
         for (const medium of album.media) {
           const item = document.createElement("li");
@@ -830,7 +1175,10 @@
           icon.setAttribute("aria-hidden", "true");
           icon.textContent = mediaIcons[medium.type] || "▤";
           const label = document.createElement("span");
-          label.textContent = medium.label;
+          label.textContent =
+            medium.type === "lp"
+              ? medium.label.replace(/\bLP\b/g, "Vinyl")
+              : medium.label;
           item.append(icon, label);
           mediaList.append(item);
         }
@@ -851,6 +1199,7 @@
         } else {
           discogsLink.hidden = true;
         }
+        renderTracklist(album.tracklist);
       }
 
       coverImage.addEventListener("error", () => {
@@ -862,14 +1211,22 @@
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         errorMessage.textContent = "";
-        const selectedMediaTypes = Array.from(
-          form.querySelectorAll('input[name="media_types"]:checked'),
-          (input) => input.value,
-        );
+        const submissionVersion = pickRequest;
+        if (!collectionReady) {
+          await loadMediaTypes();
+          if (!collectionReady || submissionVersion !== pickRequest) return;
+        }
+        const selectedMediaTypes = getSelectedMediaTypes();
         if (selectedMediaTypes.length === 0) {
           errorMessage.textContent = "Select at least one media type.";
           return;
         }
+        const requestId = ++pickRequest;
+        const sourceVersion = inventoryRequest;
+        const username = usernameInput.value.trim();
+        pickController?.abort();
+        pickController = new AbortController();
+        clearAlbum();
         statusMessage.textContent = "Looking Through Your Collection...";
         statusMessage.classList.remove("is-error");
         pickButton.disabled = true;
@@ -878,25 +1235,56 @@
           const response = await fetch("/api/pick", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            signal: pickController.signal,
             body: JSON.stringify({
-              username: usernameInput.value.trim(),
+              username,
               token: tokenInput.value,
               media_types: selectedMediaTypes,
             }),
           });
           const result = await response.json();
+          if (requestId !== pickRequest || sourceVersion !== inventoryRequest)
+            return;
           if (!response.ok)
             throw new Error(result.error || "The album could not be selected.");
+          const album = result.album;
+          if (
+            !album?.ownership_verified ||
+            !album.collection_instance_id ||
+            String(album.collection_owner).toLowerCase() !==
+              username.toLowerCase()
+          )
+            throw new Error(
+              "Collection ownership could not be verified. No album was selected.",
+            );
+          if (
+            !Array.isArray(album.media_types) ||
+            !album.media_types.some((type) => selectedMediaTypes.includes(type))
+          ) {
+            throw new Error(
+              "The result does not match the selected media types. Pick again.",
+            );
+          }
           renderAlbum(result.album);
           statusMessage.textContent = "Ready for a Spin.";
         } catch (error) {
+          if (
+            error.name === "AbortError" ||
+            requestId !== pickRequest ||
+            sourceVersion !== inventoryRequest
+          )
+            return;
+          clearAlbum();
           errorMessage.textContent =
             error.message || "Could not reach the local picker.";
           statusMessage.textContent = "No Album Selected.";
           statusMessage.classList.add("is-error");
         } finally {
-          pickButton.disabled = false;
-          pickButton.textContent = "Pick Another Album";
+          if (requestId === pickRequest && sourceVersion === inventoryRequest) {
+            pickController = null;
+            pickButton.disabled = false;
+            pickButton.textContent = "Pick Another Album";
+          }
         }
       });
 
