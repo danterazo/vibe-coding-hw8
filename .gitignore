@@ -27,3 +27,6 @@ project/logs/
 
 # Secrets
 .env
+
+# Generated photos
+/photo_process/output/

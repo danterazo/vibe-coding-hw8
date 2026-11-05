@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#eef2f5" />
+    <meta name="theme-color" content="#a92535" />
     <title>Photo Process</title>
     <style>
       :root {
         color-scheme: light;
         --ink: #1d2b36;
-        --muted: #647481;
-        --line: #cdd8df;
-        --paper: #eef2f5;
+        --muted: #715c65;
+        --line: #dcbcc4;
+        --paper: #f5e4e6;
         --white: #fbfcfd;
-        --blue: #176589;
-        --blue-soft: #d8eaf1;
-        --orange: #b4512d;
+        --blue: #a92535;
+        --blue-soft: #f5d2d7;
+        --orange: #905313;
         --green: #2f7251;
         --red: #a63c3c;
         --radius: 5px;
@@ -31,9 +31,12 @@
       }
 
       body {
-        min-width: 320px;
+        width: 80%;
+        min-width: 256px;
         min-height: 100vh;
         margin: 0;
+        transform: scale(1.25);
+        transform-origin: top left;
         background:
           linear-gradient(135deg, rgb(255 255 255 / 55%), transparent 58%),
           repeating-linear-gradient(
@@ -56,14 +59,15 @@
         min-height: 60px;
         padding: 0 max(22px, calc((100vw - 1060px) / 2));
         border-bottom: 1px solid var(--line);
-        background: rgb(251 252 253 / 84%);
+        background: var(--blue);
+        color: #ffffff;
       }
 
       .mark {
         display: flex;
         gap: 10px;
         align-items: center;
-        color: var(--blue);
+        color: #ffffff;
         font-size: 12px;
         font-weight: 800;
         letter-spacing: 0.1em;
@@ -162,6 +166,32 @@
         padding: 14px 0;
         border-top: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
+      }
+
+      .processing-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin: 0 0 18px;
+        padding: 0;
+        border: 0;
+      }
+
+      .processing-options legend {
+        margin-bottom: 10px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .processing-options label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .processing-options input {
+        accent-color: var(--blue);
       }
 
       .attribution-copy {
@@ -282,7 +312,7 @@
       }
 
       .button-primary:hover:not(:disabled) {
-        background: #10516f;
+        background: #7f1f2c;
       }
 
       .button:disabled {
@@ -323,6 +353,10 @@
       .queue-count {
         color: var(--muted);
         font-size: 12px;
+      }
+
+      .topbar .queue-count {
+        color: #ffffff;
       }
 
       .queue {
@@ -380,6 +414,7 @@
 
       .file-state {
         margin-top: 4px;
+        overflow-wrap: anywhere;
       }
 
       .file-state.is-ready {
@@ -471,7 +506,7 @@
 
         .spec {
           flex: 1;
-          min-width: 0;
+          min-width: 116px;
         }
 
         .attribution {
@@ -524,7 +559,7 @@
       <div class="mark">
         <span class="mark-icon" aria-hidden="true"></span> Image utility / 01
       </div>
-      <span class="queue-count">R50 sharing preset</span>
+      <span class="queue-count">Canon R50 sharing preset</span>
     </header>
 
     <main>
@@ -535,11 +570,29 @@
         </div>
         <div class="specs" aria-label="Output settings">
           <div class="spec">
-            <strong>1500 × 1000</strong><span>pixels</span>
+            <strong id="output-size">1500 × 1000</strong><span>pixels</span>
           </div>
-          <div class="spec"><strong>150 DPI</strong><span>JPEG</span></div>
+          <div class="spec">
+            <strong id="output-density">150 DPI</strong><span>JPEG</span>
+          </div>
+          <div class="spec">
+            <strong id="output-destination">Checking...</strong
+            ><span>Output</span>
+          </div>
         </div>
       </section>
+
+      <fieldset class="processing-options">
+        <legend>Processing Options</legend>
+        <label
+          ><input id="resize-enabled" type="checkbox" checked />Resize to 1500 ×
+          1000</label
+        >
+        <label
+          ><input id="metadata-enabled" type="checkbox" checked />Add
+          Metadata</label
+        >
+      </fieldset>
 
       <section class="attribution" aria-label="Image attribution">
         <p class="attribution-copy">
@@ -604,7 +657,8 @@
       <p class="notice">
         School project. Process only images you have permission to edit;
         attribution is user-provided and does not establish ownership. Output is
-        fitted without cropping on a white 3:2 canvas and tagged at 150 DPI.
+        fitted without cropping when resizing is enabled. Metadata adds
+        attribution and 150 DPI when enabled.
       </p>
       <div class="row-actions batch-actions">
         <button
@@ -635,8 +689,13 @@
       const countElement = document.querySelector("#queue-count");
       const liveStatus = document.querySelector("#live-status");
       const authorInput = document.querySelector("#author-name");
+      const resizeInput = document.querySelector("#resize-enabled");
+      const metadataInput = document.querySelector("#metadata-enabled");
+      const outputDestination = document.querySelector("#output-destination");
       const jobs = [];
       let isProcessing = false;
+      let outputConfigured = false;
+      let saveOutputEnabled = false;
 
       function formatBytes(bytes) {
         if (bytes < 1024 * 1024)
@@ -650,9 +709,18 @@
       }
 
       function render() {
+        resizeInput.disabled = isProcessing;
+        metadataInput.disabled = isProcessing;
+        authorInput.disabled = isProcessing || !metadataInput.checked;
+        document.querySelector("#output-size").textContent = resizeInput.checked
+          ? "1500 × 1000"
+          : "Original Size";
+        document.querySelector("#output-density").textContent =
+          metadataInput.checked ? "150 DPI" : "Standard";
         countElement.textContent = `${jobs.length} ${jobs.length === 1 ? "photo" : "photos"}`;
         emptyElement.hidden = jobs.length > 0;
-        processButton.disabled = jobs.length === 0 || isProcessing;
+        processButton.disabled =
+          jobs.length === 0 || isProcessing || !outputConfigured;
         clearButton.disabled = jobs.length === 0 || isProcessing;
         queueElement
           .querySelectorAll(".photo-row")
@@ -726,6 +794,43 @@
             ? `${files.length} ${files.length === 1 ? "photo" : "photos"} added.`
             : "";
         render();
+      }
+
+      async function loadOutputConfiguration() {
+        try {
+          const response = await fetch("/api/config", { cache: "no-store" });
+          if (response.ok) {
+            const configuration = await response.json();
+            saveOutputEnabled = configuration.save_output === true;
+          }
+        } catch {
+          saveOutputEnabled = false;
+        } finally {
+          outputConfigured = true;
+          outputDestination.textContent = saveOutputEnabled
+            ? "./output/"
+            : "Downloads";
+          render();
+        }
+      }
+
+      async function saveProcessedOutput(blob, filename) {
+        if (!saveOutputEnabled) return null;
+        const response = await fetch(
+          `/api/output?filename=${encodeURIComponent(filename)}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "image/jpeg" },
+            body: blob,
+          },
+        );
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(
+            result.error || "Could not save the image in ./output/.",
+          );
+        }
+        return result;
       }
 
       function makeJfifSegment() {
@@ -914,24 +1019,29 @@
         return new Blob([output], { type: "image/jpeg" });
       }
 
-      async function processImage(file, metadataName, authorName) {
+      async function processImage(
+        file,
+        metadataName,
+        authorName,
+        options = { resize: true, metadata: true },
+      ) {
         const bitmap = await createImageBitmap(file);
         const canvas = document.createElement("canvas");
-        canvas.width = outputWidth;
-        canvas.height = outputHeight;
+        canvas.width = options.resize ? outputWidth : bitmap.width;
+        canvas.height = options.resize ? outputHeight : bitmap.height;
         const context = canvas.getContext("2d", { alpha: false });
         context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, outputWidth, outputHeight);
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.imageSmoothingEnabled = true;
         context.imageSmoothingQuality = "high";
         const scale = Math.min(
-          outputWidth / bitmap.width,
-          outputHeight / bitmap.height,
+          canvas.width / bitmap.width,
+          canvas.height / bitmap.height,
         );
         const width = Math.round(bitmap.width * scale);
         const height = Math.round(bitmap.height * scale);
-        const left = Math.floor((outputWidth - width) / 2);
-        const top = Math.floor((outputHeight - height) / 2);
+        const left = Math.floor((canvas.width - width) / 2);
+        const top = Math.floor((canvas.height - height) / 2);
         context.drawImage(bitmap, left, top, width, height);
         bitmap.close();
         const blob = await new Promise((resolve, reject) => {
@@ -944,6 +1054,7 @@
             0.92,
           );
         });
+        if (!options.metadata) return blob;
         const withDpi = setJpegDpi(await blob.arrayBuffer());
         return addJpegMetadata(
           await withDpi.arrayBuffer(),
@@ -952,13 +1063,20 @@
         );
       }
 
-      function outputName(fileName, index) {
+      function outputName(
+        fileName,
+        index,
+        options = { resize: true, metadata: true },
+      ) {
         const stem =
           fileName
             .replace(/\.[^.]+$/, "")
             .replace(/[\\/:*?"<>|]/g, "-")
             .trim() || `photo-${index + 1}`;
-        return `${stem}-1500x1000-150dpi.jpg`;
+        const suffix =
+          `${options.resize ? "-1500x1000" : ""}${options.metadata ? "-150dpi" : ""}` ||
+          "-processed";
+        return `${stem}${suffix}.jpg`;
       }
 
       fileInput.addEventListener("change", () => {
@@ -995,8 +1113,12 @@
 
       processButton.addEventListener("click", async () => {
         if (isProcessing) return;
+        const options = {
+          resize: resizeInput.checked,
+          metadata: metadataInput.checked,
+        };
         const authorName = authorInput.value.trim();
-        if (!authorName) {
+        if (options.metadata && !authorName) {
           liveStatus.textContent = "Enter an author name before processing.";
           authorInput.focus();
           return;
@@ -1009,21 +1131,23 @@
           if (job.outputUrl) URL.revokeObjectURL(job.outputUrl);
           job.outputUrl = null;
           job.state = "working";
-          job.message = "Resizing...";
+          job.message = options.resize ? "Resizing..." : "Converting...";
           liveStatus.textContent = `Processing ${index + 1} of ${jobs.length}`;
           render();
           try {
-            const name = outputName(job.file.name, index);
+            const name = outputName(job.file.name, index, options);
             const metadataName = name.replace(/\.jpg$/i, "");
             const output = await processImage(
               job.file,
               metadataName,
               authorName,
+              options,
             );
+            const saved = await saveProcessedOutput(output, name);
             job.outputUrl = URL.createObjectURL(output);
-            job.outputName = name;
+            job.outputName = saved ? saved.filename : name;
             job.state = "ready";
-            job.message = `1500 × 1000 px · 150 DPI · ${formatBytes(output.size)}`;
+            job.message = `${options.resize ? "1500 × 1000 px" : "Original Dimensions"} · ${options.metadata ? "150 DPI" : "JPEG"} · ${formatBytes(output.size)}${saved ? ` · Saved to ${saved.path}` : ""}`;
             completed += 1;
           } catch (error) {
             job.state = "error";
@@ -1033,7 +1157,7 @@
         }
         isProcessing = false;
         processButton.textContent = "Process photos";
-        liveStatus.textContent = `${completed} of ${jobs.length} ${jobs.length === 1 ? "photo" : "photos"} processed.`;
+        liveStatus.textContent = `${completed} of ${jobs.length} ${jobs.length === 1 ? "photo" : "photos"} processed${saveOutputEnabled ? " and saved to ./output/" : ""}.`;
         render();
       });
 
@@ -1044,7 +1168,10 @@
         render();
       });
 
+      resizeInput.addEventListener("change", render);
+      metadataInput.addEventListener("change", render);
       render();
+      loadOutputConfiguration();
     </script>
   </body>
 </html>
