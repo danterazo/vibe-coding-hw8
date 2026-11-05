@@ -13,23 +13,16 @@
 
 ## About This Log
 
-These apps began in one shared Copilot thread. For the professor: messages involving more than one app appear in each relevant log. They are the same
-conversation, not separate sessions; shared time is counted only once.
+These apps started in one Copilot thread. For the professor: shared messages appear in each relevant log, but they are not separate sessions.
 
-**Estimated time for Photo Process: 57m 53s.** Shared work is split equally as an estimate. Approval waits and idle gaps are excluded. The recorded
-wording is preserved below. Existing app links are relative; retired paths are plain labels. Status updates reflect their original dates. No human
-edits were recorded.
+**Estimated time on this app: 57m 53s.** Shared work is split evenly; idle time and approval waits are excluded. The three apps total **4h 36m 10s**,
+counted once.
 
-| App                     | Allocated time |
-| ----------------------- | -------------- |
-| Discogs Album Picker    | 2h 48m 25s     |
-| Pantry Tracker          | 49m 52s        |
-| Photo Process           | 57m 53s        |
-| **Total, counted once** | **4h 36m 10s** |
+The recorded wording is preserved. Historical links have been cleaned up, and no human edits were recorded.
 
 ## Prompt 1: fork and submodule question
 
-> **Source:** U01 · shared · **Time:** 11s · **App share:** 3s · **Verified:** not-run
+> **Time:** 11s · **Verified:** not-run · U01 · shared
 
 Can I fork into a submodule? Or must I first fork to my repo, then add as a submodule?
 
@@ -43,7 +36,7 @@ separate project. With a submodule, commits to the apps go in the fork, and the 
 
 ## Prompt 2: initialize the HW8 submodule
 
-> **Source:** U02 · shared · **Time:** 160s · **App share:** 53s · **Verified:** not-run
+> **Time:** 2m 40s · **Verified:** not-run · U02 · shared
 
 Okay, then add this as a submodule now:
 
@@ -63,7 +56,7 @@ I left unrelated edits in [node_profiles.py](../../../../project/homelab_dashboa
 
 ## Prompt 3: brainstorm apps and relocate the fork
 
-> **Source:** U03 · shared · **Time:** 293s · **App share:** 97s · **Verified:** not-run
+> **Time:** 4m 53s · **Verified:** not-run · U03 · shared
 
 Help me brainstorm three app ideas to implement. Preferably useful things and not things that are already in the fork
 
@@ -87,7 +80,7 @@ The warranty tracker looks like a particularly good small app: practical, easy t
 
 ## Prompt 4: initial Discogs and app-ideas request
 
-> **Source:** U04 · shared · **Time:** 53s · **App share:** 17s · **Verified:** not-run
+> **Time:** 53s · **Verified:** not-run · U04 · shared
 
 Oh, make a small app that hits the Discogs API and returns a random non-digital album to put on from my collection. Call it "discogs-album-picker".
 Ensure you show the album art, artist, type of media (e.g. CD, cassette, LP) as well
@@ -100,7 +93,7 @@ _Interrupted before a final reply. The follow-up continues later in this log._
 
 ## Prompt 5: refine Discogs and app ideas
 
-> **Source:** U05 · shared · **Time:** 231s · **App share:** 77s · **Verified:** agent-tested
+> **Time:** 3m 51s · **Verified:** agent-tested · U05 · shared
 
 Oh, let's make a small app that hits the Discogs API and returns a random non-digital album to put on from my collection. Call it
 "discogs-album-picker". Ensure you show the album art, artist, type of media (e.g. CD, cassette, LP) as well. Just initialize prompts.md files for
@@ -126,7 +119,7 @@ for a photo-resizer prompt log?
 
 ## Prompt 6: initialize and develop all three apps
 
-> **Source:** U06 · shared · **Time:** 2272s · **App share:** 757s · **Verified:** agent-tested
+> **Time:** 37m 52s · **Verified:** agent-tested · U06 · shared
 
 Cool, yeah. So lets do:
 
@@ -156,7 +149,7 @@ are staged; app files remain uncommitted, and the parent repo still points to su
 
 ## Prompt 7: Photo Process metadata and shared commits
 
-> **Source:** U07 · shared · **Time:** 852s · **App share:** 284s · **Verified:** agent-tested
+> **Time:** 14m 12s · **Verified:** agent-tested · U07 · shared
 
 Okay, try again for the piecemeal commits. Then for the photo processing tool, look at my exiftool processing script in my common repo(s) and apply
 those same metadata changes, i.e. "Dante Razo" as the author.
@@ -183,7 +176,7 @@ The fork is clean and the parent points to the pushed fork revision. I left the 
 
 ## Prompt 8: editable attribution and school-use notes
 
-> **Source:** U08 · shared · **Time:** 1003s · **App share:** 334s · **Verified:** agent-tested
+> **Time:** 16m 43s · **Verified:** agent-tested · U08 · shared
 
 Make the photo processor modular, s.t. anyone could put their name and then get attribution in the image. Just make the default name / text box value
 "Dante Razo". Add a note to use responsibly as this app (and the others, if they need notes too) is just for school
@@ -202,7 +195,7 @@ name in every author field. Added a visible reminder to process only images the 
 
 ## Prompt 9: increase all app scales
 
-> **Source:** U20 · shared · **Time:** 529s · **App share:** 176s · **Verified:** agent-tested
+> **Time:** 8m 49s · **Verified:** agent-tested · U20 · shared
 
 Make the Discogs app and others 125% scale so they're easier to read
 
@@ -218,7 +211,7 @@ Security reminder: a previous diagnostic accidentally printed the Discogs PAT. R
 
 ## Prompt 10: tall artwork and shared scaling follow-up
 
-> **Source:** U21 · shared · **Time:** 477s · **App share:** 159s · **Verified:** agent-tested
+> **Time:** 7m 57s · **Verified:** agent-tested · U21 · shared
 
 Ensure cassette artwork, if tall and not square, is rendered as the full rectangle
 
@@ -234,7 +227,7 @@ untouched.
 
 ## Prompt 11: automatic commit and push preference
 
-> **Source:** U27 · shared · **Time:** 15s · **App share:** 5s · **Verified:** not-run
+> **Time:** 15s · **Verified:** not-run · U27 · shared
 
 For this thread, automatically make commits using your suggested messages andpush without prompting the user
 
@@ -248,7 +241,7 @@ Pending commits remain blocked by the 1Password signing error; I won’t bypass 
 
 ## Prompt 12: open the three app tabs
 
-> **Source:** U30 · shared · **Time:** 34s · **App share:** 11s · **Verified:** agent-tested
+> **Time:** 34s · **Verified:** agent-tested · U30 · shared
 
 Open tabs for all apps so I can test them
 
@@ -259,7 +252,7 @@ start it to test that app.
 
 ## Prompt 13: visible themes and Canon R50 label
 
-> **Source:** U31 · shared · **Time:** 321s · **App share:** 107s · **Verified:** agent-tested
+> **Time:** 5m 21s · **Verified:** agent-tested · U31 · shared
 
 Add nice theming to each app. Just a basic color would be fine too as long as its visible. In the camera app, use the full "Canon R50" instead of just
 R50
@@ -273,7 +266,7 @@ signing.
 
 ## Prompt 14: finish interrupted work
 
-> **Source:** U32 · shared · **Time:** 415s · **App share:** 138s · **Verified:** agent-tested
+> **Time:** 6m 55s · **Verified:** agent-tested · U32 · shared
 
 Review this thread for any work that might've been skipped over or interrupted, then finish it
 
@@ -289,7 +282,7 @@ Two items remain blocked:
 
 ## Prompt 15: save processed photos beside the HTML
 
-> **Source:** U33 · **Time:** 485s · **Verified:** agent-tested
+> **Time:** 8m 5s · **Verified:** agent-tested · U33
 
 For the photo processing app, save output to ./output/ relative to the HTML file
 
@@ -303,7 +296,7 @@ Changes remain uncommitted due to the signing blocker. Final formatting was bloc
 
 ## Prompt 16: make hw8 launcher
 
-> **Source:** U34 · shared · **Time:** 373s · **App share:** 124s · **Verified:** agent-tested
+> **Time:** 6m 13s · **Verified:** agent-tested · U34 · shared
 
 Add make hw8 to the makefile that starts the three hw8 apps if they arent already up
 
@@ -315,7 +308,7 @@ Verified startup, reuse, and port-conflict handling. Changes remain local due to
 
 ## Prompt 17: optional processing, app READMEs and Python style
 
-> **Source:** U35 · shared · **Time:** 1457s · **App share:** 485s · **Verified:** agent-tested
+> **Time:** 24m 17s · **Verified:** agent-tested · U35 · shared
 
 Make the photo process app's resize feature optional, and the metadata optional as well, but make it so metadata is checked by default.
 
@@ -359,7 +352,7 @@ Commit/push was attempted but remains blocked by 1Password signing.
 
 ## Prompt 18: summarize, commit and publish pending work
 
-> **Source:** U37 · shared · **Time:** 483s · **App share:** 161s · **Verified:** agent-tested
+> **Time:** 8m 3s · **Verified:** agent-tested · U37 · shared
 
 Any changes that haven't been committed yet, summarize them and create commits for them. As many or as few you feel is appropriate per change
 
@@ -377,35 +370,10 @@ Created and pushed **5 commits**:
 
 Both repositories are **clean**, and remote branches match. Credentials and generated photos were excluded.
 
-## Timing Details
+## Time Notes
 
-Source: Copilot session `5fee04d5-d9c3-47d3-9451-3dc01cb856a3`, messages U01–U37. U23 was an automatic terminal notice and is folded into U22. The
-later timing backfill is excluded. Dates use America/Chicago.
+Per-prompt times cover the whole request, including shared work. Shared requests are marked above; the app total includes only its allocated share.
+These are elapsed-activity estimates, not CPU or billing measurements.
 
-Activity is the union of recorded assistant/tool intervals, minus explicit approval waits. Parallel intervals count once and are clipped when another
-request arrives. This is an elapsed-activity estimate, not CPU or billing time. Shared setup, implementation, and publishing are divided equally, with
-one-second rounding adjustments. U07 and U21 include shared commits/scaling alongside app-specific work.
-
-The covered window spans 10h 37m 54s, including idle gaps. Allocated activity totals 4h 36m 10s; explicit approval waits total 2h 22m 27s. “Elapsed”
-below includes those waits, but excludes gaps between requests.
-
-| Source | Activity | Elapsed | Approval wait | App share |
-| ------ | -------: | ------: | ------------: | --------: |
-| U01    |      11s |     11s |            0s |        3s |
-| U02    |     160s |    160s |            0s |       53s |
-| U03    |     293s |   1018s |            0s |       97s |
-| U04    |      53s |     53s |            0s |       17s |
-| U05    |     231s |    231s |            0s |       77s |
-| U06    |    2272s |   2272s |            0s |      757s |
-| U07    |     852s |    852s |            0s |      284s |
-| U08    |    1003s |   1003s |            0s |      334s |
-| U20    |     529s |    529s |            0s |      176s |
-| U21    |     477s |    477s |            0s |      159s |
-| U27    |      15s |     15s |            0s |        5s |
-| U30    |      34s |     34s |            0s |       11s |
-| U31    |     321s |    321s |            0s |      107s |
-| U32    |     415s |   1936s |         1521s |      138s |
-| U33    |     485s |    549s |           64s |      485s |
-| U34    |     373s |    373s |            0s |      124s |
-| U35    |    1457s |   1801s |          344s |      485s |
-| U37    |     483s |   2398s |         1915s |      161s |
+The detailed audit is preserved in commit `40bb291`. It covers messages U01–U37 from session `5fee04d5-d9c3-47d3-9451-3dc01cb856a3`; the automatic
+terminal notice is excluded. Later log-editing work is not included.

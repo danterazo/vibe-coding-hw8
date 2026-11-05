@@ -13,23 +13,16 @@
 
 ## About This Log
 
-These apps began in one shared Copilot thread. For the professor: messages involving more than one app appear in each relevant log. They are the same
-conversation, not separate sessions; shared time is counted only once.
+These apps started in one Copilot thread. For the professor: shared messages appear in each relevant log, but they are not separate sessions.
 
-**Estimated time for Discogs Album Picker: 2h 48m 25s.** Shared work is split equally as an estimate. Approval waits and idle gaps are excluded. The
-recorded wording is preserved below. Existing app links are relative; retired paths are plain labels. Status updates reflect their original dates. No
-human edits were recorded.
+**Estimated time on this app: 2h 48m 25s.** Shared work is split evenly; idle time and approval waits are excluded. The three apps total **4h 36m
+10s**, counted once.
 
-| App                     | Allocated time |
-| ----------------------- | -------------- |
-| Discogs Album Picker    | 2h 48m 25s     |
-| Pantry Tracker          | 49m 52s        |
-| Photo Process           | 57m 53s        |
-| **Total, counted once** | **4h 36m 10s** |
+The recorded wording is preserved. Historical links have been cleaned up, and no human edits were recorded.
 
 ## Prompt 1: fork and submodule question
 
-> **Source:** U01 · shared · **Time:** 11s · **App share:** 4s · **Verified:** not-run
+> **Time:** 11s · **Verified:** not-run · U01 · shared
 
 Can I fork into a submodule? Or must I first fork to my repo, then add as a submodule?
 
@@ -43,7 +36,7 @@ separate project. With a submodule, commits to the apps go in the fork, and the 
 
 ## Prompt 2: initialize the HW8 submodule
 
-> **Source:** U02 · shared · **Time:** 160s · **App share:** 54s · **Verified:** not-run
+> **Time:** 2m 40s · **Verified:** not-run · U02 · shared
 
 Okay, then add this as a submodule now:
 
@@ -63,7 +56,7 @@ I left unrelated edits in [node_profiles.py](../../../../project/homelab_dashboa
 
 ## Prompt 3: brainstorm apps and relocate the fork
 
-> **Source:** U03 · shared · **Time:** 293s · **App share:** 98s · **Verified:** not-run
+> **Time:** 4m 53s · **Verified:** not-run · U03 · shared
 
 Help me brainstorm three app ideas to implement. Preferably useful things and not things that are already in the fork
 
@@ -87,7 +80,7 @@ The warranty tracker looks like a particularly good small app: practical, easy t
 
 ## Prompt 4: initial Discogs and app-ideas request
 
-> **Source:** U04 · shared · **Time:** 53s · **App share:** 18s · **Verified:** not-run
+> **Time:** 53s · **Verified:** not-run · U04 · shared
 
 Oh, make a small app that hits the Discogs API and returns a random non-digital album to put on from my collection. Call it "discogs-album-picker".
 Ensure you show the album art, artist, type of media (e.g. CD, cassette, LP) as well
@@ -100,7 +93,7 @@ _Interrupted before a final reply. The follow-up continues later in this log._
 
 ## Prompt 5: refine Discogs and app ideas
 
-> **Source:** U05 · shared · **Time:** 231s · **App share:** 77s · **Verified:** agent-tested
+> **Time:** 3m 51s · **Verified:** agent-tested · U05 · shared
 
 Oh, let's make a small app that hits the Discogs API and returns a random non-digital album to put on from my collection. Call it
 "discogs-album-picker". Ensure you show the album art, artist, type of media (e.g. CD, cassette, LP) as well. Just initialize prompts.md files for
@@ -126,7 +119,7 @@ for a photo-resizer prompt log?
 
 ## Prompt 6: initialize and develop all three apps
 
-> **Source:** U06 · shared · **Time:** 2272s · **App share:** 758s · **Verified:** agent-tested
+> **Time:** 37m 52s · **Verified:** agent-tested · U06 · shared
 
 Cool, yeah. So lets do:
 
@@ -156,7 +149,7 @@ are staged; app files remain uncommitted, and the parent repo still points to su
 
 ## Prompt 7: Photo Process metadata and shared commits
 
-> **Source:** U07 · shared · **Time:** 852s · **App share:** 284s · **Verified:** agent-tested
+> **Time:** 14m 12s · **Verified:** agent-tested · U07 · shared
 
 Okay, try again for the piecemeal commits. Then for the photo processing tool, look at my exiftool processing script in my common repo(s) and apply
 those same metadata changes, i.e. "Dante Razo" as the author.
@@ -183,7 +176,7 @@ The fork is clean and the parent points to the pushed fork revision. I left the 
 
 ## Prompt 8: editable attribution and school-use notes
 
-> **Source:** U08 · shared · **Time:** 1003s · **App share:** 335s · **Verified:** agent-tested
+> **Time:** 16m 43s · **Verified:** agent-tested · U08 · shared
 
 Make the photo processor modular, s.t. anyone could put their name and then get attribution in the image. Just make the default name / text box value
 "Dante Razo". Add a note to use responsibly as this app (and the others, if they need notes too) is just for school
@@ -201,7 +194,7 @@ not saved.
 
 ## Prompt 9: keep Python and HTML separate
 
-> **Source:** U09 · **Time:** 457s · **Verified:** agent-tested
+> **Time:** 7m 37s · **Verified:** agent-tested · U09
 
 Actually, it seems messier with just one file, so have a python file and HTML one but no test file for the Discogs app.
 
@@ -217,7 +210,7 @@ The unrelated `.vscode/settings.json` change remains untouched.
 
 ## Prompt 10: media filters and iconography
 
-> **Source:** U10 · **Time:** 951s · **Verified:** agent-tested
+> **Time:** 15m 51s · **Verified:** agent-tested · U10
 
 Add iconography to the Discogs page. Make it more obvious that something is a CD, cassette, or LP, or whatever. Use title case wherever applicable.
 Add a filter feature with checkboxes for different media types — support digital media, but have it unchecked by default
@@ -238,7 +231,7 @@ An untracked `.env` remains in the fork. I did not inspect or stage it; it’s t
 
 ## Prompt 11: load Discogs credentials from .env
 
-> **Source:** U11 · **Time:** 607s · **Verified:** agent-tested
+> **Time:** 10m 7s · **Verified:** agent-tested · U11
 
 I migrated the token to ".env". Give users the option to enter it on the website or, if .env is detected with DISCOGS_PAT, read that in and blank out
 the field on the website since you already have a token. I also have DISCOGS_USERNAME
@@ -258,7 +251,7 @@ left the unrelated parent changes to `.gitignore` and project memory untouched. 
 
 ## Prompt 12: initial configured-token mask request
 
-> **Source:** U12 · **Time:** 106s · **Verified:** not-run
+> **Time:** 1m 46s · **Verified:** not-run · U12
 
 Or, you could just have dots in the PAT field with an arbitrary number of them to show that it was read from the env
 
@@ -268,7 +261,7 @@ _Interrupted before a final reply. The follow-up continues later in this log._
 
 ## Prompt 13: configured-token mask and source note
 
-> **Source:** U13 · **Time:** 372s · **Verified:** agent-tested
+> **Time:** 6m 12s · **Verified:** agent-tested · U13
 
 Or, you could just have dots in the PAT field with an arbitrary number of them to show that it was read from the env. Make sure that the user knows,
 somewhere somehow, that this was configured in `.env`
@@ -287,7 +280,7 @@ The Discogs preview remains available at [http://127.0.0.1:8768/](http://127.0.0
 
 ## Prompt 14: initial Japanese album-name request
 
-> **Source:** U14 · **Time:** 85s · **Verified:** not-run
+> **Time:** 1m 25s · **Verified:** not-run · U14
 
 For Japanese albums, place their native name in parenthesis after the romaji name
 
@@ -297,7 +290,7 @@ _Interrupted before a final reply. The follow-up continues later in this log._
 
 ## Prompt 15: Japanese artist and album names
 
-> **Source:** U15 · **Time:** 353s · **Verified:** agent-tested
+> **Time:** 5m 53s · **Verified:** agent-tested · U15
 
 For Japanese albums and artist, place their native name (kanji, kana) in parenthesis after the romaji name
 
@@ -312,7 +305,7 @@ project memory remain untouched.
 
 ## Prompt 16: Utada Hikari title and release link
 
-> **Source:** U16 · **Time:** 114s · **Verified:** agent-tested
+> **Time:** 1m 54s · **Verified:** agent-tested · U16
 
 Can you link Utada's Hikari album? Wouldn't that be rendered as 光 or did Discogs suggest otherwise?
 
@@ -329,7 +322,7 @@ added.
 
 ## Prompt 17: cassette filtering
 
-> **Source:** U17 · **Time:** 320s · **Verified:** agent-tested
+> **Time:** 5m 20s · **Verified:** agent-tested · U17
 
 Why can't I filter on cassettes? My library has plenty of cassettes, e.g. George Strait, Tokenai Namae, etc.
 
@@ -345,7 +338,7 @@ Fork commit `8519d9b` and parent pointer commit `b7dfa63` are pushed. The unrela
 
 ## Prompt 18: initial request to remove extra presets
 
-> **Source:** U18 · **Time:** 75s · **Verified:** not-run
+> **Time:** 1m 15s · **Verified:** not-run · U18
 
 Why do you need these additional filters? Just fix the filters that are already there
 
@@ -355,7 +348,7 @@ _Interrupted before a final reply. The follow-up continues later in this log._
 
 ## Prompt 19: checkbox-only media filters
 
-> **Source:** U19 · **Time:** 329s · **Verified:** agent-tested
+> **Time:** 5m 29s · **Verified:** agent-tested · U19
 
 Why do you need these additional filters? Just fix the filters that are already there. That way if I want every type of media, I just leave the
 defaults. If I only want cassettes, I uncheck everything except cassettes
@@ -370,7 +363,7 @@ pointer is updated in `5280df4`. The shared page has been reloaded to the defaul
 
 ## Prompt 20: increase all app scales
 
-> **Source:** U20 · shared · **Time:** 529s · **App share:** 177s · **Verified:** agent-tested
+> **Time:** 8m 49s · **Verified:** agent-tested · U20 · shared
 
 Make the Discogs app and others 125% scale so they're easier to read
 
@@ -386,7 +379,7 @@ Security reminder: a previous diagnostic accidentally printed the Discogs PAT. R
 
 ## Prompt 21: tall artwork and shared scaling follow-up
 
-> **Source:** U21 · shared · **Time:** 477s · **App share:** 159s · **Verified:** agent-tested
+> **Time:** 7m 57s · **Verified:** agent-tested · U21 · shared
 
 Ensure cassette artwork, if tall and not square, is rendered as the full rectangle
 
@@ -401,7 +394,7 @@ untouched.
 
 ## Prompt 22: master-artwork fallback
 
-> **Source:** U22 · **Time:** 1429s · **Verified:** agent-tested
+> **Time:** 23m 49s · **Verified:** agent-tested · U22
 
 If album artwork isn't present for a specific release, retrieve it from the master release instead. For example, Mass of the Fermenting Dregs' No New
 World cassette
@@ -417,7 +410,7 @@ per the project instructions.
 
 ## Prompt 23: investigate unrelated collection releases
 
-> **Source:** U24 · **Time:** 109s · **Verified:** agent-tested
+> **Time:** 1m 49s · **Verified:** agent-tested · U24
 
 I'm seeing a lot of releases, French ones especially, like the attached. They aren't in my library. What's going wrong here? Are you sure you're
 picking songs from my library?
@@ -433,7 +426,7 @@ Did Cassius appear **inside the picker**, or only **after clicking its Discogs l
 
 ## Prompt 24: release tracklists
 
-> **Source:** U25 · **Time:** 405s · **Verified:** agent-tested
+> **Time:** 6m 45s · **Verified:** agent-tested · U25
 
 Retrieve and display trakclists for each release as well
 
@@ -451,7 +444,7 @@ the browser.
 
 ## Prompt 25: release facts and artist background
 
-> **Source:** U26 · **Time:** 332s · **Verified:** agent-tested
+> **Time:** 5m 32s · **Verified:** agent-tested · U26
 
 Add genres for the album display on the Discogs app. Show release date (exact, if known, otherwise year is fine), genres, release country, fun facts
 like that within reason. If you can easily tell _where_ a band is from, like which city, put that as well
@@ -472,7 +465,7 @@ backgrounds, including explicit hometowns when present in Discogs profiles. Desk
 
 ## Prompt 26: automatic commit and push preference
 
-> **Source:** U27 · shared · **Time:** 15s · **App share:** 5s · **Verified:** not-run
+> **Time:** 15s · **Verified:** not-run · U27 · shared
 
 For this thread, automatically make commits using your suggested messages andpush without prompting the user
 
@@ -486,7 +479,7 @@ Pending commits remain blocked by the 1Password signing error; I won’t bypass 
 
 ## Prompt 27: header subtitle wrapping
 
-> **Source:** U28 · **Time:** 142s · **Verified:** agent-tested
+> **Time:** 2m 22s · **Verified:** agent-tested · U28
 
 Fix the wrapping here on the site
 
@@ -498,7 +491,7 @@ Commit/push remains blocked by 1Password signing; the fix is preserved locally.
 
 ## Prompt 28: available formats and merged Vinyl control
 
-> **Source:** U29 · **Time:** 234s · **Verified:** agent-tested
+> **Time:** 3m 54s · **Verified:** agent-tested · U29
 
 Do I even have any DVDs or Blu-Rays in my library? Let's make the media types hide if not present anywhere in the source library. Also, combine LP and
 Vinyl into just "Vinyl" on the frontend (but, if they're truly separate on Discogs' end, then make the filter apply both filters)
@@ -520,7 +513,7 @@ Vinyl requests submit both `lp` and `vinyl`. Digital remains unchecked by defaul
 
 ## Prompt 29: open the three app tabs
 
-> **Source:** U30 · shared · **Time:** 34s · **App share:** 12s · **Verified:** agent-tested
+> **Time:** 34s · **Verified:** agent-tested · U30 · shared
 
 Open tabs for all apps so I can test them
 
@@ -531,7 +524,7 @@ start it to test that app.
 
 ## Prompt 30: visible themes and Canon R50 label
 
-> **Source:** U31 · shared · **Time:** 321s · **App share:** 107s · **Verified:** agent-tested
+> **Time:** 5m 21s · **Verified:** agent-tested · U31 · shared
 
 Add nice theming to each app. Just a basic color would be fine too as long as its visible. In the camera app, use the full "Canon R50" instead of just
 R50
@@ -549,7 +542,7 @@ Verified the blue-teal header in the live Discogs page and checked the populated
 
 ## Prompt 31: finish interrupted work
 
-> **Source:** U32 · shared · **Time:** 415s · **App share:** 139s · **Verified:** agent-tested
+> **Time:** 6m 55s · **Verified:** agent-tested · U32 · shared
 
 Review this thread for any work that might've been skipped over or interrupted, then finish it
 
@@ -565,7 +558,7 @@ Two items remain blocked:
 
 ## Prompt 32: make hw8 launcher
 
-> **Source:** U34 · shared · **Time:** 373s · **App share:** 125s · **Verified:** agent-tested
+> **Time:** 6m 13s · **Verified:** agent-tested · U34 · shared
 
 Add make hw8 to the makefile that starts the three hw8 apps if they arent already up
 
@@ -577,7 +570,7 @@ Verified startup, reuse, and port-conflict handling. Changes remain local due to
 
 ## Prompt 33: optional processing, app READMEs and Python style
 
-> **Source:** U35 · shared · **Time:** 1457s · **App share:** 486s · **Verified:** agent-tested
+> **Time:** 24m 17s · **Verified:** agent-tested · U35 · shared
 
 Make the photo process app's resize feature optional, and the metadata optional as well, but make it so metadata is checked by default.
 
@@ -621,7 +614,7 @@ Commit/push was attempted but remains blocked by 1Password signing.
 
 ## Prompt 34: strict owned-only collection and filter fixes
 
-> **Source:** U36 · **Time:** 686s · **Verified:** agent-tested
+> **Time:** 11m 26s · **Verified:** agent-tested · U36
 
 Fix filtering for the discogs app, and investigate why it shows albums i dont own still. only show owned albums, no wishlist or anything
 
@@ -640,7 +633,7 @@ Tests, lint, and diagnostics pass. Publication remains blocked by the existing s
 
 ## Prompt 35: summarize, commit and publish pending work
 
-> **Source:** U37 · shared · **Time:** 483s · **App share:** 161s · **Verified:** agent-tested
+> **Time:** 8m 3s · **Verified:** agent-tested · U37 · shared
 
 Any changes that haven't been committed yet, summarize them and create commits for them. As many or as few you feel is appropriate per change
 
@@ -658,52 +651,10 @@ Created and pushed **5 commits**:
 
 Both repositories are **clean**, and remote branches match. Credentials and generated photos were excluded.
 
-## Timing Details
+## Time Notes
 
-Source: Copilot session `5fee04d5-d9c3-47d3-9451-3dc01cb856a3`, messages U01–U37. U23 was an automatic terminal notice and is folded into U22. The
-later timing backfill is excluded. Dates use America/Chicago.
+Per-prompt times cover the whole request, including shared work. Shared requests are marked above; the app total includes only its allocated share.
+These are elapsed-activity estimates, not CPU or billing measurements.
 
-Activity is the union of recorded assistant/tool intervals, minus explicit approval waits. Parallel intervals count once and are clipped when another
-request arrives. This is an elapsed-activity estimate, not CPU or billing time. Shared setup, implementation, and publishing are divided equally, with
-one-second rounding adjustments. U07 and U21 include shared commits/scaling alongside app-specific work.
-
-The covered window spans 10h 37m 54s, including idle gaps. Allocated activity totals 4h 36m 10s; explicit approval waits total 2h 22m 27s. “Elapsed”
-below includes those waits, but excludes gaps between requests.
-
-| Source | Activity | Elapsed | Approval wait | App share |
-| ------ | -------: | ------: | ------------: | --------: |
-| U01    |      11s |     11s |            0s |        4s |
-| U02    |     160s |    160s |            0s |       54s |
-| U03    |     293s |   1018s |            0s |       98s |
-| U04    |      53s |     53s |            0s |       18s |
-| U05    |     231s |    231s |            0s |       77s |
-| U06    |    2272s |   2272s |            0s |      758s |
-| U07    |     852s |    852s |            0s |      284s |
-| U08    |    1003s |   1003s |            0s |      335s |
-| U09    |     457s |    457s |            0s |      457s |
-| U10    |     951s |    951s |            0s |      951s |
-| U11    |     607s |    607s |            0s |      607s |
-| U12    |     106s |    106s |            0s |      106s |
-| U13    |     372s |    372s |            0s |      372s |
-| U14    |      85s |     85s |            0s |       85s |
-| U15    |     353s |    353s |            0s |      353s |
-| U16    |     114s |    114s |            0s |      114s |
-| U17    |     320s |    320s |            0s |      320s |
-| U18    |      75s |     75s |            0s |       75s |
-| U19    |     329s |    329s |            0s |      329s |
-| U20    |     529s |    529s |            0s |      177s |
-| U21    |     477s |    477s |            0s |      159s |
-| U22    |    1429s |   1434s |            0s |     1429s |
-| U24    |     109s |    109s |            0s |      109s |
-| U25    |     405s |   1977s |         1572s |      405s |
-| U26    |     332s |   1300s |          967s |      332s |
-| U27    |      15s |     15s |            0s |        5s |
-| U28    |     142s |    142s |            0s |      142s |
-| U29    |     234s |    234s |            0s |      234s |
-| U30    |      34s |     34s |            0s |       12s |
-| U31    |     321s |    321s |            0s |      107s |
-| U32    |     415s |   1936s |         1521s |      139s |
-| U34    |     373s |    373s |            0s |      125s |
-| U35    |    1457s |   1801s |          344s |      486s |
-| U36    |     686s |   2851s |         2164s |      686s |
-| U37    |     483s |   2398s |         1915s |      161s |
+The detailed audit is preserved in commit `40bb291`. It covers messages U01–U37 from session `5fee04d5-d9c3-47d3-9451-3dc01cb856a3`; the automatic
+terminal notice is excluded. Later log-editing work is not included.
