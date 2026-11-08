@@ -51,8 +51,8 @@ Commit that and the instructions under "Init HW8"
 Added the fork as a submodule at `hw8/fork` and included the HW8 instructions PDF in commit `d7d6003` (`Init HW8`). The commit was pushed to
 `origin/main`.
 
-I left unrelated edits in [node_profiles.py](../../../../project/homelab_dashboard/node_profiles.py) and
-[test_hardware.py](../../../../project/tests/unit/test_hardware.py) untouched.
+I left unrelated edits in [node_profiles.py](../../../../projects/project1/homelab_dashboard/node_profiles.py) and
+[test_hardware.py](../../../../projects/project1/tests/unit/test_hardware.py) untouched.
 
 ## Prompt 3: brainstorm apps and relocate the fork
 
